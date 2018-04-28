@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        data-target="#xs-components-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        id="xs-components-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        data-target="#xs-directives-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        id="xs-directives-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -352,14 +352,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        data-target="#components-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        id="components-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
 >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -377,14 +377,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        data-target="#directives-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-672bab3e-31cd-40dc-a6ea-67d23f15f766"
+                                        id="directives-links-module-FormlyModule-d698b129-61b5-4f97-8c47-a609ebf002e0"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -605,7 +605,7 @@
             <tr>
                 <td class="col-md-3">template</td>
                 <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;formly-field *ngFor&#x3D;&quot;let field of fields&quot;
-  [model]&#x3D;&quot;fieldModel(field)&quot; [form]&#x3D;&quot;form&quot;
+  [model]&#x3D;&quot;field.model&quot; [form]&#x3D;&quot;form&quot;
   [field]&#x3D;&quot;field&quot;
   [ngClass]&#x3D;&quot;field.className&quot;
   [options]&#x3D;&quot;options&quot;&gt;
@@ -635,9 +635,6 @@
                         <ul class="index-list">
                             <li>
                                 <a href="#changeModel">changeModel</a>
-                            </li>
-                            <li>
-                                <a href="#fieldModel">fieldModel</a>
                             </li>
                             <li>
                                 <a href="#setOptions">setOptions</a>
@@ -705,7 +702,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/core/src/components/formly.form.ts:36</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/core/src/components/formly.form.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -824,7 +821,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/core/src/components/formly.form.ts:28</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/core/src/components/formly.form.ts:29</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -848,7 +845,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/src/components/formly.form.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/core/src/components/formly.form.ts:28</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -868,7 +865,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/core/src/components/formly.form.ts:33</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/core/src/components/formly.form.ts:34</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -892,7 +889,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/components/formly.form.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/src/components/formly.form.ts:27</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -913,7 +910,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/core/src/components/formly.form.ts:29</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/core/src/components/formly.form.ts:30</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -935,7 +932,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/core/src/components/formly.form.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/core/src/components/formly.form.ts:31</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -970,7 +967,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/core/src/components/formly.form.ts:80</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">src/core/src/components/formly.form.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -1020,91 +1017,6 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="fieldModel"></a>
-                        <span class="name">
-                            <b>
-                            fieldModel
-                            </b>
-                            <a href="#fieldModel"><span class="fa fa-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-<code>fieldModel(field: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig</a>, model: )</code>
-                    </td>
-                </tr>
-
-
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/core/src/components/formly.form.ts:73</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                                    <td>Default value</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>field</td>
-                                                        <td>
-                                                                    <code><a href="../interfaces/FormlyFieldConfig.html" target="_self" >FormlyFieldConfig</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                        <td>
-                                                        </td>
-
-                                                </tr>
-                                                <tr>
-                                                        <td>model</td>
-                                                        <td>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                        <td>
-                                                                <code>this.model</code>
-                                                        </td>
-
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="setOptions"></a>
                         <span class="name">
                             <b>
@@ -1123,7 +1035,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/core/src/components/formly.form.ts:86</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/core/src/components/formly.form.ts:80</a></div>
                             </td>
                         </tr>
 
@@ -1153,15 +1065,16 @@ import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
 import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, clone } from &#x27;../utils&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
-import { debounceTime } from &#x27;rxjs/operator/debounceTime&#x27;;
-import { map } from &#x27;rxjs/operator/map&#x27;;
+import { debounceTime } from &#x27;rxjs/operators/debounceTime&#x27;;
+import { map } from &#x27;rxjs/operators/map&#x27;;
+import { tap } from &#x27;rxjs/operators/tap&#x27;;
 import { Subscription } from &#x27;rxjs/Subscription&#x27;;
 
 @Component({
   selector: &#x27;formly-form&#x27;,
   template: &#x60;
     &lt;formly-field *ngFor&#x3D;&quot;let field of fields&quot;
-      [model]&#x3D;&quot;fieldModel(field)&quot; [form]&#x3D;&quot;form&quot;
+      [model]&#x3D;&quot;field.model&quot; [form]&#x3D;&quot;form&quot;
       [field]&#x3D;&quot;field&quot;
       [ngClass]&#x3D;&quot;field.className&quot;
       [options]&#x3D;&quot;options&quot;&gt;
@@ -1217,13 +1130,6 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
     this.clearModelSubscriptions();
   }
 
-  fieldModel(field: FormlyFieldConfig, model &#x3D; this.model) {
-    if (field.key &amp;&amp; (field.fieldGroup || field.fieldArray)) {
-      return getFieldModel(model, field, true);
-    }
-    return model;
-  }
-
   changeModel(event: { key: string, value: any }) {
     assignModelValue(this.model, event.key, event.value);
     this.modelChange.emit(this.model);
@@ -1270,20 +1176,23 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
   private trackModelChanges(fields: FormlyFieldConfig[], rootKey: string[] &#x3D; []) {
     fields.forEach(field &#x3D;&gt; {
       if (field.key &amp;&amp; field.type &amp;&amp; !field.fieldGroup &amp;&amp; !field.fieldArray) {
-        let valueChanges &#x3D; field.formControl.valueChanges;
-        const debounce &#x3D; field.modelOptions &amp;&amp; field.modelOptions.debounce &amp;&amp; field.modelOptions.debounce.default;
-        if (debounce &gt; 0) {
-          valueChanges &#x3D; debounceTime.call(valueChanges, debounce);
-        }
-        if (field.parsers &amp;&amp; field.parsers.length &gt; 0) {
-          field.parsers.forEach(parserFn &#x3D;&gt; {
-            valueChanges &#x3D; map.call(valueChanges, parserFn);
-          });
-        }
+        const valueChanges &#x3D; field.formControl.valueChanges.pipe(
+          field.modelOptions &amp;&amp; field.modelOptions.debounce &amp;&amp; field.modelOptions.debounce.default
+          ? debounceTime(field.modelOptions.debounce.default)
+          : tap(() &#x3D;&gt; {}),
+          map(value &#x3D;&gt; {
+            if (field.parsers &amp;&amp; field.parsers.length &gt; 0) {
+              field.parsers.forEach(parserFn &#x3D;&gt; {
+                value &#x3D; map.call(value, parserFn);
+              });
+            }
 
-        this.modelChangeSubs.push(valueChanges
-          .subscribe(event &#x3D;&gt; this.changeModel({ key: [...rootKey, field.key].join(&#x27;.&#x27;), value: event })),
+            return value;
+          }),
+          tap(value &#x3D;&gt; this.changeModel({ key: [...rootKey, field.key].join(&#x27;.&#x27;), value })),
         );
+
+        this.modelChangeSubs.push(valueChanges.subscribe());
       }
 
       if (field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0) {
@@ -1299,7 +1208,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 
   private patchModel(model: any) {
     this.clearModelSubscriptions();
-    this.resetFieldArray(this.fields, model, this.model);
+    this.resetFieldArray(this.fields, model);
     this.initializeFormValue(this.form);
     (&lt;FormGroup&gt; this.form).patchValue(model, { onlySelf: true });
     this.trackModelChanges(this.fields);
@@ -1307,7 +1216,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
-    this.resetFieldArray(this.fields, model, this.model);
+    this.resetFieldArray(this.fields, model);
 
     // we should call &#x60;NgForm::resetForm&#x60; to ensure changing &#x60;submitted&#x60; state after resetting form
     // but only when the current component is a root one.
@@ -1318,18 +1227,16 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
     }
   }
 
-  private resetFieldArray(fields: FormlyFieldConfig[], newModel: any, modelToUpdate: any) {
+  private resetFieldArray(fields: FormlyFieldConfig[], newModel: any) {
     fields.forEach(field &#x3D;&gt; {
       if ((field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0) || field.fieldArray) {
-        const newFieldModel &#x3D; this.fieldModel(field, newModel),
-          fieldModel &#x3D; this.fieldModel(field, modelToUpdate);
-
+        const newFieldModel &#x3D; getFieldModel(newModel, field, true);
         if (field.fieldArray) {
           field.fieldGroup &#x3D; field.fieldGroup || [];
           field.fieldGroup.length &#x3D; 0;
 
-          if (fieldModel !&#x3D;&#x3D; newFieldModel &amp;&amp; fieldModel) {
-            fieldModel.length &#x3D; 0;
+          if (field.model !&#x3D;&#x3D; newFieldModel &amp;&amp; field.model) {
+            field.model.length &#x3D; 0;
           }
 
           const formControl &#x3D; &lt;FormArray&gt;field.formControl;
@@ -1338,12 +1245,12 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
           }
 
           newFieldModel.forEach((m: any, i: number) &#x3D;&gt; {
-            fieldModel[i] &#x3D; m;
+            field.model[i] &#x3D; m;
             field.fieldGroup.push({ ...clone(field.fieldArray), key: &#x60;${i}&#x60; });
             this.formlyBuilder.buildForm(formControl, [field.fieldGroup[i]], newFieldModel, this.options);
           });
         } else {
-          this.resetFieldArray(field.fieldGroup, newFieldModel, fieldModel);
+          this.resetFieldArray(field.fieldGroup, newFieldModel);
         }
       } else if (field.key &amp;&amp; field.type) {
         field.formControl.reset(getFieldModel(newModel, field, false));
@@ -1392,7 +1299,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><formly-field *ngFor="let field of fields"  [model]="fieldModel(field)" [form]="form"  [field]="field"  [ngClass]="field.className"  [options]="options"></formly-field><ng-content></ng-content></div>'
+        var COMPONENT_TEMPLATE = '<div><formly-field *ngFor="let field of fields"  [model]="field.model" [form]="form"  [field]="field"  [ngClass]="field.className"  [options]="options"></formly-field><ng-content></ng-content></div>'
     var COMPONENTS = [{'name': 'FormlyField', 'selector': 'formly-field'},{'name': 'FormlyForm', 'selector': 'formly-form'},{'name': 'FormlyGroup', 'selector': 'formly-group'},{'name': 'FormlyValidationMessage', 'selector': 'formly-validation-message'}];
     var DIRECTIVES = [{'name': 'FormlyAttributes', 'selector': '[formlyAttributes]'}];
     var ACTUAL_COMPONENT = {'name': 'FormlyForm'};
