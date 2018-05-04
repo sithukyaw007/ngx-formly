@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        data-target="#xs-components-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        id="xs-components-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        data-target="#xs-directives-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        id="xs-directives-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -352,14 +352,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        data-target="#components-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        id="components-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
 >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -377,14 +377,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        data-target="#directives-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-7572cbbf-342c-4f29-a8f0-77200d2b8c12"
+                                        id="directives-links-module-FormlyModule-110ebc95-1312-4e8c-8883-0146333ea2c9"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -787,7 +787,7 @@
     <div class="tab-pane fade tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
-import { FormlyConfig, FieldValidatorFn } from &#x27;./formly.config&#x27;;
+import { FormlyConfig, FieldValidatorFn, TemplateManipulators } from &#x27;./formly.config&#x27;;
 import { FORMLY_VALIDATORS, evalStringExpression, evalExpressionValueSetter, getFieldId, isObject, isNullOrUndefined, clone, assignModelToFields } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.field.config&#x27;;
 import { getKeyPath, isFunction } from &#x27;../utils&#x27;;
@@ -833,6 +833,7 @@ export class FormlyFormBuilder {
       this.initFieldOptions(field);
       this.initFieldExpression(field, options);
       this.initFieldValidation(field);
+      this.initFieldWrappers(field);
       this.initFieldAsyncValidation(field);
 
       if (field.key &amp;&amp; field.type) {
@@ -1102,6 +1103,40 @@ export class FormlyFormBuilder {
     : validator;
 
     return (control: AbstractControl) &#x3D;&gt; (validator as FieldValidatorFn)(control, field);
+  }
+
+  private initFieldWrappers(field: FormlyFieldConfig) {
+    const templateManipulators: TemplateManipulators &#x3D; {
+      preWrapper: [],
+      postWrapper: [],
+    };
+
+    if (field.templateOptions) {
+      this.mergeTemplateManipulators(templateManipulators, field.templateOptions.templateManipulators);
+    }
+
+    this.mergeTemplateManipulators(templateManipulators, this.formlyConfig.templateManipulators);
+
+    const preWrappers &#x3D; templateManipulators.preWrapper.map(m &#x3D;&gt; m(field)).filter(type &#x3D;&gt; type),
+      postWrappers &#x3D; templateManipulators.postWrapper.map(m &#x3D;&gt; m(field)).filter(type &#x3D;&gt; type);
+
+    if (!field.wrappers) {
+      field.wrappers &#x3D; [];
+    }
+
+    field.wrappers &#x3D; [...preWrappers, ...(field.wrappers || []), ...postWrappers];
+  }
+
+  private mergeTemplateManipulators(source: TemplateManipulators, target: TemplateManipulators) {
+    target &#x3D; target || {};
+    if (target.preWrapper) {
+      source.preWrapper &#x3D; source.preWrapper.concat(target.preWrapper);
+    }
+    if (target.postWrapper) {
+      source.postWrapper &#x3D; source.postWrapper.concat(target.postWrapper);
+    }
+
+    return source;
   }
 }
 </code></pre>
