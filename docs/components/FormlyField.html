@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        data-target="#xs-components-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        id="xs-components-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        data-target="#xs-directives-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        id="xs-directives-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -352,14 +352,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        data-target="#components-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        id="components-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
 >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -377,14 +377,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        data-target="#directives-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-a97d6717-8784-407b-bd5c-639eacc8a7dd"
+                                        id="directives-links-module-FormlyModule-cad55768-5a1a-4ee1-9705-07b186391ecd"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -970,10 +970,10 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
   }
 
   ngOnInit() {
-    this.lifeCycleHooks(this.lifecycle.onInit);
     if (!this.field.template) {
       this.createFieldComponent();
     }
+    this.lifeCycleHooks(this.lifecycle.onInit);
   }
 
   ngOnChanges(changes: SimpleChanges) {
