@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        data-target="#xs-components-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        id="xs-components-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        data-target="#xs-directives-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        id="xs-directives-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -352,14 +352,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        data-target="#components-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        id="components-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
 >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -377,14 +377,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        data-target="#directives-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-fb7b696f-f39e-4349-b02a-779ea95d809b"
+                                        id="directives-links-module-FormlyModule-152cd83e-d22d-4c82-9c8d-ca24fe769d63"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -874,22 +874,23 @@ export class FormlyFormBuilder {
           field.type &#x3D; &#x27;formly-group&#x27;;
         }
 
+        // if &#x60;hideExpression&#x60; is set in that case we have to deal
+        // with toggle FormControl for each field in fieldGroup separately
+        if (field.hideExpression) {
+          field.fieldGroup.forEach(f &#x3D;&gt; {
+            let hideExpression: any &#x3D; f.hideExpression || (() &#x3D;&gt; false);
+            if (typeof hideExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
+              hideExpression &#x3D; evalStringExpression(hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
+            }
+
+            f.hideExpression &#x3D; (model, formState) &#x3D;&gt; field.hide || hideExpression(model, formState);
+          });
+        }
+
         if (field.key) {
           this.addFormControl(form, field, { [field.key]: field.fieldArray ? [] : {} }, field.key);
           this._buildForm(field.formControl as FormGroup, field.fieldGroup, options);
         } else {
-          // if &#x60;hideExpression&#x60; is set in that case we have to deal
-          // with toggle FormControl for each field in fieldGroup separately
-          if (field.hideExpression) {
-            field.fieldGroup.forEach(f &#x3D;&gt; {
-              let hideExpression: any &#x3D; f.hideExpression || (() &#x3D;&gt; false);
-              if (typeof hideExpression &#x3D;&#x3D;&#x3D; &#x27;string&#x27;) {
-                hideExpression &#x3D; evalStringExpression(hideExpression, [&#x27;model&#x27;, &#x27;formState&#x27;]);
-              }
-
-              f.hideExpression &#x3D; (model, formState) &#x3D;&gt; field.hide || hideExpression(model, formState);
-            });
-          }
           this._buildForm(form, field.fieldGroup, options);
         }
       }
