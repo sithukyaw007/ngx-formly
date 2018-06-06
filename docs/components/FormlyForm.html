@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        data-target="#xs-components-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        id="xs-components-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        data-target="#xs-directives-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        id="xs-directives-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -352,14 +352,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        data-target="#components-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        id="components-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
 >
                                         <li class="link">
                                             <a href="components/FormlyForm.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyForm</a>
@@ -377,14 +377,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        data-target="#directives-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-68ba8de9-afda-4332-ad7c-0bfcf11db553"
+                                        id="directives-links-module-FormlyModule-2967d09e-b562-44ee-b866-f004488f0ea0"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -1063,7 +1063,7 @@ import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
 import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
-import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, clone } from &#x27;../utils&#x27;;
+import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, clone, assignModelToFields } from &#x27;../utils&#x27;;
 import { Subject, Subscription } from &#x27;rxjs&#x27;;
 import { debounceTime, map, tap } from &#x27;rxjs/operators&#x27;;
 
@@ -1202,6 +1202,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
   }
 
   private patchModel(model: any) {
+    assignModelToFields(this.fields, model);
     this.clearModelSubscriptions();
     this.resetFieldArray(this.fields, model);
     this.initializeFormValue(this.form);
