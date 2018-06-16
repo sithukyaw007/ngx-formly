@@ -1123,15 +1123,19 @@ export class FormlyFormBuilder {
     }
 
     this.mergeTemplateManipulators(templateManipulators, this.formlyConfig.templateManipulators);
-
-    const preWrappers &#x3D; templateManipulators.preWrapper.map(m &#x3D;&gt; m(field)).filter(type &#x3D;&gt; type),
-      postWrappers &#x3D; templateManipulators.postWrapper.map(m &#x3D;&gt; m(field)).filter(type &#x3D;&gt; type);
-
     if (!field.wrappers) {
       field.wrappers &#x3D; [];
     }
 
-    field.wrappers &#x3D; [...preWrappers, ...(field.wrappers || []), ...postWrappers];
+    const preWrappers &#x3D; templateManipulators.preWrapper
+      .map(m &#x3D;&gt; m(field))
+      .filter(wrapper &#x3D;&gt; wrapper &amp;&amp; field.wrappers.indexOf(wrapper) &#x3D;&#x3D;&#x3D; -1);
+
+    const postWrappers &#x3D; templateManipulators.postWrapper
+      .map(m &#x3D;&gt; m(field))
+      .filter(wrapper &#x3D;&gt; wrapper &amp;&amp; field.wrappers.indexOf(wrapper) &#x3D;&#x3D;&#x3D; -1);
+
+    field.wrappers &#x3D; [...preWrappers, ...field.wrappers, ...postWrappers];
   }
 
   private mergeTemplateManipulators(source: TemplateManipulators, target: TemplateManipulators) {
