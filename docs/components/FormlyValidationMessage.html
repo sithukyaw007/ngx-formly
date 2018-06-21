@@ -645,7 +645,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:15</a></div>
                             </td>
                         </tr>
 
@@ -701,7 +701,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:12</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -718,7 +718,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:13</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -750,7 +750,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:13</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -804,7 +804,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:19</a></div>
                                 </td>
                             </tr>
 
@@ -819,6 +819,7 @@
 import { FormControl } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
 import { FormlyFieldConfig } from &#x27;../components/formly.field.config&#x27;;
+import { isObject } from &#x27;../utils&#x27;;
 
 @Component({
   selector: &#x27;formly-validation-message&#x27;,
@@ -837,6 +838,16 @@ export class FormlyValidationMessage {
     for (let error in fieldForm.errors) {
       if (fieldForm.errors.hasOwnProperty(error)) {
         let message: string | Function &#x3D; this.formlyConfig.getValidatorMessage(error);
+
+        if (isObject(fieldForm.errors[error])) {
+          if (fieldForm.errors[error].errorPath) {
+            return;
+          }
+
+          if (fieldForm.errors[error].message) {
+            message &#x3D; fieldForm.errors[error].message;
+          }
+        }
 
         if (this.field.validation &amp;&amp; this.field.validation.messages &amp;&amp; this.field.validation.messages[error]) {
           message &#x3D; this.field.validation.messages[error];

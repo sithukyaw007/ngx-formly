@@ -991,11 +991,31 @@ export class FormlyFormBuilder {
       for (const validatorName in field.validators) {
         if (validatorName !&#x3D;&#x3D; &#x27;validation&#x27;) {
           let validator &#x3D; field.validators[validatorName];
+          let errorPath;
+          let message;
           if (isObject(validator)) {
+            errorPath &#x3D; validator.errorPath;
+            message &#x3D; validator.message;
             validator &#x3D; validator.expression;
           }
 
-          validators.push((control: FormControl) &#x3D;&gt; validator(control, field) ? null : { [validatorName]: true });
+          validators.push((control: FormControl) &#x3D;&gt; {
+            const isValid &#x3D; validator(control, field);
+            if (errorPath &amp;&amp; field.formControl &amp;&amp; field.formControl.get(errorPath)) {
+              if (!isValid) {
+                field.formControl.get(errorPath).setErrors({
+                  ...(field.formControl.get(errorPath).errors || {}),
+                  [validatorName]: { message },
+                });
+              } else {
+                const errors &#x3D; (field.formControl.get(errorPath).errors || {});
+                delete errors[validatorName];
+                field.formControl.get(errorPath).setErrors(Object.keys(errors).length &#x3D;&#x3D;&#x3D; 0 ? null : errors);
+              }
+            }
+
+            return isValid ? null : { [validatorName]: errorPath ? { errorPath } : true };
+          });
         }
       }
     }
