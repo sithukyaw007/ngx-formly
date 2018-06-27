@@ -835,6 +835,10 @@ export class FormlyFormBuilder {
       this.initFieldWrappers(field);
       this.initFieldAsyncValidation(field);
 
+      if (field.fieldGroup &amp;&amp; !field.type) {
+        field.type &#x3D; &#x27;formly-group&#x27;;
+      }
+
       if (field.key &amp;&amp; field.type) {
         const paths &#x3D; getKeyPath({ key: field.key });
         let rootForm &#x3D; form, rootModel &#x3D; field.model;
@@ -869,10 +873,6 @@ export class FormlyFormBuilder {
       }
 
       if (field.fieldGroup) {
-        if (!field.type) {
-          field.type &#x3D; &#x27;formly-group&#x27;;
-        }
-
         // if &#x60;hideExpression&#x60; is set in that case we have to deal
         // with toggle FormControl for each field in fieldGroup separately
         if (field.hideExpression) {
@@ -887,7 +887,6 @@ export class FormlyFormBuilder {
         }
 
         if (field.key) {
-          this.addFormControl(form, field, { [field.key]: field.fieldArray ? [] : {} }, field.key);
           this._buildForm(field.formControl as FormGroup, field.fieldGroup, options);
         } else {
           this._buildForm(form, field.fieldGroup, options);
@@ -1060,7 +1059,7 @@ export class FormlyFormBuilder {
     } else if (field.component &amp;&amp; field.component.createControl) {
       control &#x3D; field.component.createControl(model[path], field);
     } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path &amp;&amp; !field.fieldArray) {
-      control &#x3D; new FormGroup(model[path], abstractControlOptions);
+      control &#x3D; new FormGroup(model[path] || {}, abstractControlOptions);
     } else if (field.fieldArray &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path) {
       control &#x3D; new FormArray([], abstractControlOptions);
     } else {
