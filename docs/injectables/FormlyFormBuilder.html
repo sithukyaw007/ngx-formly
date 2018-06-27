@@ -847,7 +847,13 @@ export class FormlyFormBuilder {
           const formPath &#x3D; path.toString();
           // is last item
           if (index &#x3D;&#x3D;&#x3D; paths.length - 1) {
-            this.addFormControl(rootForm, field, rootModel, formPath);
+            this.addFormControl(
+              rootForm,
+              field,
+              field.fieldGroup ? { [formPath]: field.fieldArray ? [] : {} } : rootModel,
+              formPath,
+            );
+
             if (field.fieldArray) {
               field.fieldGroup &#x3D; [];
               field.model.forEach((m: any, i: number) &#x3D;&gt; field.fieldGroup.push(
@@ -1059,7 +1065,7 @@ export class FormlyFormBuilder {
     } else if (field.component &amp;&amp; field.component.createControl) {
       control &#x3D; field.component.createControl(model[path], field);
     } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path &amp;&amp; !field.fieldArray) {
-      control &#x3D; new FormGroup(model[path] || {}, abstractControlOptions);
+      control &#x3D; new FormGroup({}, abstractControlOptions);
     } else if (field.fieldArray &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path) {
       control &#x3D; new FormArray([], abstractControlOptions);
     } else {
