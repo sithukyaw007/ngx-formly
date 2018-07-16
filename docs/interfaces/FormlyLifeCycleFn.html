@@ -585,7 +585,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-83a6b438f06352dc3584a61a0890d764">Unamed property</a>
+                                        <a href="#call-declaration-c04c75becd5175e44ef956454f25f2aa">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -604,7 +604,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-83a6b438f06352dc3584a61a0890d764"></a>
+                                            <a name="call-declaration-c04c75becd5175e44ef956454f25f2aa"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -640,6 +640,11 @@ export interface FormlyFieldConfig {
    * The model that stores all the data, where the model[key] is the value of the field
    */
   readonly model?: any;
+
+  /**
+   * The parent field.
+   */
+  readonly parent?: FormlyFieldConfig;
 
   /**
    * The key that relates to the model. This will link the field value to the model

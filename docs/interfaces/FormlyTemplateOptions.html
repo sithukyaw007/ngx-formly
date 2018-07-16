@@ -708,7 +708,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="192" class="link-to-prism">src/core/src/lib/components/formly.field.config.ts:192</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="197" class="link-to-prism">src/core/src/lib/components/formly.field.config.ts:197</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1616,6 +1616,11 @@ export interface FormlyFieldConfig {
    * The model that stores all the data, where the model[key] is the value of the field
    */
   readonly model?: any;
+
+  /**
+   * The parent field.
+   */
+  readonly parent?: FormlyFieldConfig;
 
   /**
    * The key that relates to the model. This will link the field value to the model
