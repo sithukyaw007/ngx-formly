@@ -620,9 +620,6 @@
                             <li>
                                 <a href="#field">field</a>
                             </li>
-                            <li>
-                                <a href="#fieldForm">fieldForm</a>
-                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -645,7 +642,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:11</a></div>
                             </td>
                         </tr>
 
@@ -701,24 +698,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:12</a></div>
-                            </td>
-                        </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-2">
-                        <a name="fieldForm"></a>
-                        <code>fieldForm</code>
-                    </td>
-                    <td class="col-md-10">
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:11</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -737,61 +717,6 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="fieldForm"></a>
-                        <span class="name"><b>fieldForm</b><a href="#fieldForm"><span class="fa fa-link"></span></a></span>
-                    </td>
-                </tr>
-
-
-                <tr>
-                    <td class="col-md-4">
-                        <span class="accessor"><b>set</b><code>fieldForm(control: )</code></span>
-                    </td>
-                </tr>
-                            <tr>
-                                <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:13</a></div>
-                                </td>
-                            </tr>
-                    <tr>
-                        <td class="col-md-4">
-
-                                <div class="io-description">
-                                        <b>Parameters :</b>
-                                        <table class="params">
-                                            <thead>
-                                                <tr>
-                                                    <td>Name</td>
-                                                    <td>Optional</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                    <tr>
-                                                            <td>control</td>
-                                                    
-                                                    
-                                                        <td>
-                                                                no
-                                                        </td>
-                                                        
-                                                    </tr>
-                                            </tbody>
-                                        </table>
-                                </div>
-                                <div>
-                                </div>
-                                <div class="io-description">
-                                    <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                                </div>
-                        </td>
-                    </tr>
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="errorMessage"></a>
                         <span class="name"><b>errorMessage</b><a href="#errorMessage"><span class="fa fa-link"></span></a></span>
                     </td>
@@ -804,7 +729,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/core/src/lib/templates/formly.validation-message.ts:15</a></div>
                                 </td>
                             </tr>
 
@@ -816,7 +741,6 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input } from &#x27;@angular/core&#x27;;
-import { FormControl } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
 import { FormlyFieldConfig } from &#x27;../components/formly.field.config&#x27;;
 import { isObject } from &#x27;../utils&#x27;;
@@ -827,9 +751,6 @@ import { isObject } from &#x27;../utils&#x27;;
 })
 export class FormlyValidationMessage {
   @Input() field: FormlyFieldConfig;
-  @Input() set fieldForm(control: FormControl) {
-    console.warn(&#x60;formly-validation-message: Passing &#x27;fieldForm&#x27; input is deprecated and it will be removed in the 4.0 version.&#x60;);
-  }
 
   constructor(private formlyConfig: FormlyConfig) {}
 
