@@ -854,23 +854,18 @@ export class FormlyFormBuilder {
   }
 
   private _buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], options: FormlyFormOptions) {
-    fields.forEach((field, index) &#x3D;&gt; {
+    fields.forEach((field) &#x3D;&gt; {
       this.initFieldValidation(field);
       this.initFieldAsyncValidation(field);
       if (field.key &amp;&amp; field.type) {
         const paths &#x3D; getKeyPath({ key: field.key });
-        let rootForm &#x3D; form, rootModel &#x3D; field.model;
+        let rootForm &#x3D; form, rootModel &#x3D; field.fieldGroup ? { [paths[0]]: field.model } : field.model;
         paths.forEach((path, index) &#x3D;&gt; {
           // FormGroup/FormArray only allow string value for path
           const formPath &#x3D; path.toString();
           // is last item
           if (index &#x3D;&#x3D;&#x3D; paths.length - 1) {
-            this.addFormControl(
-              rootForm,
-              field,
-              field.fieldGroup ? { [formPath]: field.fieldArray ? [] : {} } : rootModel,
-              formPath,
-            );
+            this.addFormControl(rootForm, field, rootModel, formPath);
 
             if (field.fieldArray) {
               field.fieldGroup &#x3D; [];
@@ -957,9 +952,9 @@ export class FormlyFormBuilder {
       }
     } else if (field.component &amp;&amp; field.component.createControl) {
       control &#x3D; field.component.createControl(model[path], field);
-    } else if (field.fieldGroup &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path &amp;&amp; !field.fieldArray) {
+    } else if (field.fieldGroup &amp;&amp; !field.fieldArray) {
       control &#x3D; new FormGroup({}, abstractControlOptions);
-    } else if (field.fieldArray &amp;&amp; field.key &amp;&amp; field.key &#x3D;&#x3D;&#x3D; path) {
+    } else if (field.fieldArray) {
       control &#x3D; new FormArray([], abstractControlOptions);
     } else {
       control &#x3D; new FormControl(model[path], abstractControlOptions);
