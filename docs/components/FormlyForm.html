@@ -1095,7 +1095,7 @@ import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
 import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
-import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, clone, assignModelToFields } from &#x27;../utils&#x27;;
+import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, assignModelToFields } from &#x27;../utils&#x27;;
 import { Subject, Subscription } from &#x27;rxjs&#x27;;
 import { debounceTime, map, tap } from &#x27;rxjs/operators&#x27;;
 
@@ -1238,7 +1238,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
   private patchModel(model: any) {
     assignModelToFields(this.fields, model);
     this.clearModelSubscriptions();
-    this.resetFieldArray(this.fields, model);
+    this.resetFieldArray(this.fields);
     this.initializeFormValue(this.form);
     (&lt;FormGroup&gt; this.form).patchValue(model, { onlySelf: true });
     this.trackModelChanges(this.fields);
@@ -1246,7 +1246,8 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
-    this.resetFieldArray(this.fields, model);
+    assignModelToFields(this.fields, model);
+    this.resetFieldArray(this.fields);
 
     // we should call &#x60;NgForm::resetForm&#x60; to ensure changing &#x60;submitted&#x60; state after resetting form
     // but only when the current component is a root one.
@@ -1259,33 +1260,18 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
     (&lt;any&gt; this.options).resetTrackModelChanges();
   }
 
-  private resetFieldArray(fields: FormlyFieldConfig[], newModel: any) {
+  private resetFieldArray(fields: FormlyFieldConfig[]) {
     fields.forEach(field &#x3D;&gt; {
-      if ((field.fieldGroup &amp;&amp; field.fieldGroup.length &gt; 0) || field.fieldArray) {
-        const newFieldModel &#x3D; getFieldModel(newModel, field, true);
-        if (field.fieldArray) {
-          field.fieldGroup &#x3D; field.fieldGroup || [];
-          field.fieldGroup.length &#x3D; 0;
-
-          if (field.model !&#x3D;&#x3D; newFieldModel &amp;&amp; field.model) {
-            field.model.length &#x3D; 0;
-          }
-
-          const formControl &#x3D; &lt;FormArray&gt;field.formControl;
-          while (formControl.length !&#x3D;&#x3D; 0) {
-            formControl.removeAt(0);
-          }
-
-          newFieldModel.forEach((m: any, i: number) &#x3D;&gt; {
-            field.model[i] &#x3D; m;
-            field.fieldGroup.push({ ...clone(field.fieldArray), key: &#x60;${i}&#x60; });
-            this.formlyBuilder.buildForm(formControl, [field.fieldGroup[i]], newFieldModel, this.options);
-          });
-        } else {
-          this.resetFieldArray(field.fieldGroup, newFieldModel);
+      if (field.fieldArray) {
+        const formControl &#x3D; &lt;FormArray&gt; field.formControl;
+        while (formControl.length !&#x3D;&#x3D; 0) {
+          formControl.removeAt(0);
         }
+        this.formlyBuilder.buildForm(field.formControl as FormArray, field.fieldGroup, field.model, this.options);
+      } else if (field.fieldGroup) {
+        this.resetFieldArray(field.fieldGroup);
       } else if (field.key &amp;&amp; field.type) {
-        field.formControl.reset(getFieldModel(newModel, field, false));
+        field.formControl.reset(getFieldModel(field.model, field, false));
       }
     });
   }
