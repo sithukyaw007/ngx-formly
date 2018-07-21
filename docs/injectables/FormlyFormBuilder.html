@@ -215,10 +215,16 @@
                         <a href="interfaces/ConfigOption.html" data-type="entity-link">ConfigOption</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/FormlyFieldConfigCache.html" data-type="entity-link">FormlyFieldConfigCache</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
@@ -491,10 +497,16 @@
                         <a href="interfaces/ConfigOption.html" data-type="entity-link">ConfigOption</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/FormlyFieldConfigCache.html" data-type="entity-link">FormlyFieldConfigCache</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
@@ -902,6 +914,7 @@ export class FormlyFormBuilder {
   private initFieldOptions(field: FormlyFieldConfig, index: number) {
     field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
     field.templateOptions &#x3D; field.templateOptions || {};
+    field.lifecycle &#x3D; field.lifecycle || {};
     if (field.type &amp;&amp; field.key) {
       field.templateOptions &#x3D; Object.assign({
         label: &#x27;&#x27;,
@@ -959,8 +972,8 @@ export class FormlyFormBuilder {
       Object.defineProperty(field.templateOptions, &#x27;disabled&#x27;, {
         get: (function () { return !this.formControl.enabled; }).bind(field),
         set: (function (value: boolean) {
-          if (this.expressionProperties &amp;&amp; this.expressionProperties.hasOwnProperty(&#x27;templateOptions.disabled&#x27;)) {
-            this.expressionProperties[&#x27;templateOptions.disabled&#x27;].expressionValue &#x3D; value;
+          if (this._expressionProperties &amp;&amp; this._expressionProperties.hasOwnProperty(&#x27;templateOptions.disabled&#x27;)) {
+            this._expressionProperties[&#x27;templateOptions.disabled&#x27;].expressionValue &#x3D; value;
           }
 
           value ? this.formControl.disable() : this.formControl.enable();
@@ -994,7 +1007,7 @@ export class FormlyFormBuilder {
     FORMLY_VALIDATORS
       .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions.hasOwnProperty(opt))
         || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]),
-    )
+      )
       .forEach((opt) &#x3D;&gt; {
         validators.push((control: FormControl) &#x3D;&gt; {
           if (field.templateOptions[opt] &#x3D;&#x3D;&#x3D; false) {

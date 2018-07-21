@@ -215,10 +215,16 @@
                         <a href="interfaces/ConfigOption.html" data-type="entity-link">ConfigOption</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/FormlyFieldConfigCache.html" data-type="entity-link">FormlyFieldConfigCache</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
@@ -491,10 +497,16 @@
                         <a href="interfaces/ConfigOption.html" data-type="entity-link">ConfigOption</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/FormlyFieldConfigCache.html" data-type="entity-link">FormlyFieldConfigCache</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
@@ -952,7 +964,7 @@
 import { FormGroup } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
-import { FormlyFieldConfig, FormlyFormOptions, FormlyLifeCycleFn, FormlyLifeCycleOptions } from &#x27;./formly.field.config&#x27;;
+import { FormlyFieldConfig, FormlyFormOptions, FormlyLifeCycleFn } from &#x27;./formly.field.config&#x27;;
 
 @Component({
   selector: &#x27;formly-field&#x27;,
@@ -980,34 +992,34 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
   ) {}
 
   ngAfterContentInit() {
-    this.lifeCycleHooks(this.lifecycle.afterContentInit);
+    this.lifeCycleHooks(this.field.lifecycle.afterContentInit);
   }
 
   ngAfterContentChecked() {
-    this.lifeCycleHooks(this.lifecycle.afterContentChecked);
+    this.lifeCycleHooks(this.field.lifecycle.afterContentChecked);
   }
 
   ngAfterViewInit() {
-    this.lifeCycleHooks(this.lifecycle.afterViewInit);
+    this.lifeCycleHooks(this.field.lifecycle.afterViewInit);
   }
 
   ngAfterViewChecked() {
-    this.lifeCycleHooks(this.lifecycle.afterViewChecked);
+    this.lifeCycleHooks(this.field.lifecycle.afterViewChecked);
   }
 
   ngDoCheck() {
-    this.lifeCycleHooks(this.lifecycle.doCheck);
+    this.lifeCycleHooks(this.field.lifecycle.doCheck);
   }
 
   ngOnInit() {
     if (!this.field.template) {
       this.createFieldComponent();
     }
-    this.lifeCycleHooks(this.lifecycle.onInit);
+    this.lifeCycleHooks(this.field.lifecycle.onInit);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.lifeCycleHooks(this.lifecycle.onChanges);
+    this.lifeCycleHooks(this.field.lifecycle.onChanges);
     this.componentRefs.forEach(ref &#x3D;&gt; {
       Object.assign(ref.instance, {
         model: this.model,
@@ -1019,7 +1031,7 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
   }
 
   ngOnDestroy() {
-    this.lifeCycleHooks(this.lifecycle.onDestroy);
+    this.lifeCycleHooks(this.field.lifecycle.onDestroy);
     this.componentRefs.forEach(componentRef &#x3D;&gt; componentRef.destroy());
     this.componentRefs &#x3D; [];
   }
@@ -1050,10 +1062,6 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
     this.componentRefs.push(ref);
 
     return ref;
-  }
-
-  private get lifecycle(): FormlyLifeCycleOptions {
-    return this.field.lifecycle || {};
   }
 
   private lifeCycleHooks(callback: FormlyLifeCycleFn) {
