@@ -1142,7 +1142,7 @@ export class FormlyFormBuilder {
       ...templateManipulators.preWrapper.map(m &#x3D;&gt; m(field)),
       ...(field.wrappers || []),
       ...templateManipulators.postWrapper.map(m &#x3D;&gt; m(field)),
-    ].filter((el, i, a) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; a.indexOf(el));
+    ].filter((el, i, a) &#x3D;&gt; el &amp;&amp; i &#x3D;&#x3D;&#x3D; a.indexOf(el));
   }
 
   private mergeTemplateManipulators(source: TemplateManipulators, target: TemplateManipulators) {

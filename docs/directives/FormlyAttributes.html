@@ -688,7 +688,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:40</a></div>
                             </td>
                         </tr>
 
@@ -756,7 +756,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:8</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:22</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -778,16 +778,21 @@
                         </span>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Arguments : </i><code>'$event' </code>
+                        </td>
+                    </tr>
                 <tr>
                     <td class="col-md-4">
-<code>blur()</code>
+<code>blur($event: )</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:31</a></div>
                             </td>
                         </tr>
 
@@ -807,16 +812,21 @@
                         </span>
                     </td>
                 </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Arguments : </i><code>'$event' </code>
+                        </td>
+                    </tr>
                 <tr>
                     <td class="col-md-4">
-<code>focus()</code>
+<code>focus($event: )</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:24</a></div>
                             </td>
                         </tr>
 
@@ -827,28 +837,77 @@
 
 
 
+            <section>
+    <h3 id="accessors">
+        Accessors
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="to"></a>
+                        <span class="name"><b>to</b><a href="#to"><span class="fa fa-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>to()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/core/src/lib/components/formly.attributes.ts:38</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Directive, HostListener, ElementRef, Input, OnChanges, SimpleChanges, SimpleChange, Renderer2 } from &#x27;@angular/core&#x27;;
-import { FormlyFieldConfig } from &#x27;./formly.field.config&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Directive, HostListener, ElementRef, Input, OnChanges, SimpleChanges, Renderer2 } from &#x27;@angular/core&#x27;;
+import { FormlyFieldConfig, FormlyTemplateOptions } from &#x27;./formly.field.config&#x27;;
 
 @Directive({
   selector: &#x27;[formlyAttributes]&#x27;,
+  host: {
+    &#x27;[attr.id]&#x27;: &#x27;field.id&#x27;,
+    &#x27;[attr.name]&#x27;: &#x27;field.name&#x27;,
+    &#x27;[attr.placeholder]&#x27;: &#x27;to.placeholder&#x27;,
+    &#x27;[attr.tabindex]&#x27;: &#x27;to.tabindex&#x27;,
+    &#x27;[attr.readonly]&#x27;: &#x27;to.readonly&#x27;,
+    &#x27;[attr.step]&#x27;: &#x27;to.step&#x27;,
+
+    &#x27;(keyup)&#x27;: &#x27;to.keyup &amp;&amp; to.keyup(field, $event)&#x27;,
+    &#x27;(keydown)&#x27;: &#x27;to.keydown &amp;&amp; to.keydown(field, $event)&#x27;,
+    &#x27;(click)&#x27;: &#x27;to.click &amp;&amp; to.click(field, $event)&#x27;,
+    &#x27;(change)&#x27;: &#x27;to.change &amp;&amp; to.change(field, $event)&#x27;,
+    &#x27;(keypress)&#x27;: &#x27;to.keypress &amp;&amp; to.keypress(field, $event)&#x27;,
+  },
 })
 export class FormlyAttributes implements OnChanges {
   @Input(&#x27;formlyAttributes&#x27;) field: FormlyFieldConfig;
-  private attributes &#x3D; [&#x27;id&#x27;, &#x27;name&#x27;, &#x27;placeholder&#x27;, &#x27;tabindex&#x27;, &#x27;step&#x27;, &#x27;readonly&#x27;];
-  private statements &#x3D; [&#x27;change&#x27;, &#x27;keydown&#x27;, &#x27;keyup&#x27;, &#x27;keypress&#x27;, &#x27;click&#x27;, &#x27;focus&#x27;, &#x27;blur&#x27;];
 
-  @HostListener(&#x27;focus&#x27;) onFocus() {
+  @HostListener(&#x27;focus&#x27;, [&#x27;$event&#x27;]) onFocus($event) {
     this.field.focus &#x3D; true;
+    if (this.to.focus) {
+      this.to.focus(this.field, $event);
+    }
   }
 
-  @HostListener(&#x27;blur&#x27;) onBlur() {
+  @HostListener(&#x27;blur&#x27;, [&#x27;$event&#x27;]) onBlur($event) {
     this.field.focus &#x3D; false;
+    if (this.to.blur) {
+      this.to.blur(this.field, $event);
+    }
+  }
+
+  get to(): FormlyTemplateOptions {
+    return this.field.templateOptions || {};
   }
 
   constructor(
@@ -859,59 +918,17 @@ export class FormlyAttributes implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.field) {
       const fieldChanges &#x3D; changes.field;
-      this.attributes
-        .filter(attr &#x3D;&gt; this.canApplyRender(fieldChanges, attr))
-        .forEach(attr &#x3D;&gt; this.renderer.setAttribute(
-          this.elementRef.nativeElement, attr, this.getPropValue(this.field, attr),
-        ));
-
-      if (this.field.templateOptions &amp;&amp; this.field.templateOptions.attributes) {
-        const attributes &#x3D; this.field.templateOptions.attributes;
+      if (this.to &amp;&amp; this.to.attributes) {
+        const attributes &#x3D; this.to.attributes;
         Object.keys(attributes).forEach(name &#x3D;&gt; this.renderer.setAttribute(
           this.elementRef.nativeElement, name, attributes[name] as string,
         ));
       }
 
-      this.statements
-        .filter(statement &#x3D;&gt; this.canApplyRender(fieldChanges, statement))
-        .forEach(statement &#x3D;&gt; this.renderer.listen(
-          this.elementRef.nativeElement, statement, this.getStatementValue(statement),
-        ));
-
       if ((fieldChanges.previousValue || {}).focus !&#x3D;&#x3D; (fieldChanges.currentValue || {}).focus &amp;&amp; this.elementRef.nativeElement.focus) {
         this.elementRef.nativeElement[this.field.focus ? &#x27;focus&#x27; : &#x27;blur&#x27;]();
       }
     }
-  }
-
-  private getPropValue(field: FormlyFieldConfig, prop: string) {
-    field &#x3D; field || {};
-    if (field.templateOptions &amp;&amp; field.templateOptions[prop]) {
-      return field.templateOptions[prop];
-    }
-
-    return (&lt;any&gt;field)[prop] || &#x27;&#x27;;
-  }
-
-  private getStatementValue(statement: string) {
-    const fn &#x3D; this.field.templateOptions[statement];
-
-    return (event: any) &#x3D;&gt; fn(this.field, event);
-  }
-
-  private canApplyRender(fieldChange: SimpleChange, prop: string): Boolean {
-    const currentValue &#x3D; this.getPropValue(this.field, prop),
-      previousValue &#x3D; this.getPropValue(fieldChange.previousValue, prop);
-
-    if (previousValue !&#x3D;&#x3D; currentValue) {
-      if (this.statements.indexOf(prop) !&#x3D;&#x3D; -1) {
-        return typeof currentValue &#x3D;&#x3D;&#x3D; &#x27;function&#x27;;
-      }
-
-      return true;
-    }
-
-    return false;
   }
 }
 </code></pre>
