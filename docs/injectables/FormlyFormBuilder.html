@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#xs-components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="xs-components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyField.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyField</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#xs-directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="xs-directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -374,14 +374,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                         <li class="link">
                                             <a href="components/FormlyField.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyField</a>
@@ -399,14 +399,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -835,7 +835,7 @@ import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.
 import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
 import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, assignModelToFields, getKeyPath } from &#x27;../utils&#x27;;
 
-@Injectable()
+@Injectable({ providedIn: &#x27;root&#x27; })
 export class FormlyFormBuilder {
   private formId &#x3D; 0;
 
@@ -1138,19 +1138,11 @@ export class FormlyFormBuilder {
     }
 
     this.mergeTemplateManipulators(templateManipulators, this.formlyConfig.templateManipulators);
-    if (!field.wrappers) {
-      field.wrappers &#x3D; [];
-    }
-
-    const preWrappers &#x3D; templateManipulators.preWrapper
-      .map(m &#x3D;&gt; m(field))
-      .filter(wrapper &#x3D;&gt; wrapper &amp;&amp; field.wrappers.indexOf(wrapper) &#x3D;&#x3D;&#x3D; -1);
-
-    const postWrappers &#x3D; templateManipulators.postWrapper
-      .map(m &#x3D;&gt; m(field))
-      .filter(wrapper &#x3D;&gt; wrapper &amp;&amp; field.wrappers.indexOf(wrapper) &#x3D;&#x3D;&#x3D; -1);
-
-    field.wrappers &#x3D; [...preWrappers, ...field.wrappers, ...postWrappers];
+    field.wrappers &#x3D; [
+      ...templateManipulators.preWrapper.map(m &#x3D;&gt; m(field)),
+      ...(field.wrappers || []),
+      ...templateManipulators.postWrapper.map(m &#x3D;&gt; m(field)),
+    ].filter((el, i, a) &#x3D;&gt; i &#x3D;&#x3D;&#x3D; a.indexOf(el));
   }
 
   private mergeTemplateManipulators(source: TemplateManipulators, target: TemplateManipulators) {

@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#xs-components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="xs-components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyField.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyField</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#xs-directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="xs-directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -374,14 +374,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="components-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                         <li class="link">
                                             <a href="components/FormlyField.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyField</a>
@@ -399,14 +399,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        data-target="#directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-58a1ba080ebce8576f570bd246ef3b20"
+                                        id="directives-links-module-FormlyModule-951a9ca9575705010eaa46d5a69a84a9"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -737,7 +737,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>, componentFactoryResolver: <a href="https://angular.io/api/core/ComponentFactoryResolver" target="_blank">ComponentFactoryResolver</a>)</code>
+<code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -764,18 +764,6 @@
                                                   
                                                         <td>
                                                                     <code><a href="../injectables/FormlyConfig.html" target="_self" >FormlyConfig</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>componentFactoryResolver</td>
-                                                  
-                                                        <td>
-                                                                    <code><a href="https://angular.io/api/core/ComponentFactoryResolver" target="_blank" >ComponentFactoryResolver</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -964,7 +952,7 @@
 import { FormGroup } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
-import { FormlyFieldConfig, FormlyFormOptions, FormlyLifeCycleFn } from &#x27;./formly.field.config&#x27;;
+import { FormlyFieldConfig, FormlyFormOptions, FormlyLifeCycleFn, FormlyLifeCycleOptions } from &#x27;./formly.field.config&#x27;;
 
 @Component({
   selector: &#x27;formly-field&#x27;,
@@ -986,40 +974,37 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
 
   private componentRefs: ComponentRef&lt;Field&gt;[] &#x3D; [];
 
-  constructor(
-    private formlyConfig: FormlyConfig,
-    private componentFactoryResolver: ComponentFactoryResolver,
-  ) {}
+  constructor(private formlyConfig: FormlyConfig) {}
 
   ngAfterContentInit() {
-    this.lifeCycleHooks(this.field.lifecycle.afterContentInit);
+    this.lifeCycleHooks(this.lifecycle.afterContentInit);
   }
 
   ngAfterContentChecked() {
-    this.lifeCycleHooks(this.field.lifecycle.afterContentChecked);
+    this.lifeCycleHooks(this.lifecycle.afterContentChecked);
   }
 
   ngAfterViewInit() {
-    this.lifeCycleHooks(this.field.lifecycle.afterViewInit);
+    this.lifeCycleHooks(this.lifecycle.afterViewInit);
   }
 
   ngAfterViewChecked() {
-    this.lifeCycleHooks(this.field.lifecycle.afterViewChecked);
+    this.lifeCycleHooks(this.lifecycle.afterViewChecked);
   }
 
   ngDoCheck() {
-    this.lifeCycleHooks(this.field.lifecycle.doCheck);
+    this.lifeCycleHooks(this.lifecycle.doCheck);
   }
 
   ngOnInit() {
     if (!this.field.template) {
       this.createFieldComponent();
     }
-    this.lifeCycleHooks(this.field.lifecycle.onInit);
+    this.lifeCycleHooks(this.lifecycle.onInit);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.lifeCycleHooks(this.field.lifecycle.onChanges);
+    this.lifeCycleHooks(this.lifecycle.onChanges);
     this.componentRefs.forEach(ref &#x3D;&gt; {
       Object.assign(ref.instance, {
         model: this.model,
@@ -1031,7 +1016,7 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
   }
 
   ngOnDestroy() {
-    this.lifeCycleHooks(this.field.lifecycle.onDestroy);
+    this.lifeCycleHooks(this.lifecycle.onDestroy);
     this.componentRefs.forEach(componentRef &#x3D;&gt; componentRef.destroy());
     this.componentRefs &#x3D; [];
   }
@@ -1041,15 +1026,16 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
 
     let fieldComponent &#x3D; this.fieldComponent;
     (this.field.wrappers || []).forEach(wrapperName &#x3D;&gt; {
-      const wrapperRef &#x3D; this.createComponent(fieldComponent, this.formlyConfig.getWrapper(wrapperName).component);
+      const wrapper &#x3D; this.formlyConfig.getWrapper(wrapperName);
+      const wrapperRef &#x3D; this.createComponent(wrapper.componentFactoryResolver, fieldComponent, wrapper.component);
       fieldComponent &#x3D; wrapperRef.instance.fieldComponent;
     });
 
-    return this.createComponent(fieldComponent, type.component);
+    return this.createComponent(type.componentFactoryResolver, fieldComponent, type.component);
   }
 
-  private createComponent(fieldComponent: ViewContainerRef, component: any): ComponentRef&lt;any&gt; {
-    let componentFactory &#x3D; this.componentFactoryResolver.resolveComponentFactory(component);
+  private createComponent(componentFactoryResolver: ComponentFactoryResolver, fieldComponent: ViewContainerRef, component: any): ComponentRef&lt;any&gt; {
+    let componentFactory &#x3D; componentFactoryResolver.resolveComponentFactory(component);
     let ref &#x3D; &lt;ComponentRef&lt;Field&gt;&gt;fieldComponent.createComponent(componentFactory);
 
     Object.assign(ref.instance, {
@@ -1062,6 +1048,10 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
     this.componentRefs.push(ref);
 
     return ref;
+  }
+
+  private get lifecycle(): FormlyLifeCycleOptions {
+    return this.field.lifecycle || {};
   }
 
   private lifeCycleHooks(callback: FormlyLifeCycleFn) {
