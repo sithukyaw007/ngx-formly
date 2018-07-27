@@ -584,6 +584,39 @@
 
 <h1 id="change-log">Change Log</h1>
 <p>All notable changes to this project will be documented in this file. See <a href="https://github.com/conventional-changelog/standard-version">standard-version</a> for commit guidelines.</p>
+<p><a name="5.0.0-alpha.0"></a></p>
+<h1 id="5-0-0-alpha-0-2018-07-26-"><a href="https://github.com/formly-js/ngx-formly/compare/v4.6.6...v5.0.0-alpha.0">5.0.0-alpha.0</a> (2018-07-26)</h1>
+<p>To upgrade from 4.0 to 5.0 see <a href="./UPGRADE-5.0.md">UPGRADE-5.0</a></p>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>core:</strong> allow false value for legacy select-option (<a href="https://github.com/formly-js/ngx-formly/commit/edee68a">edee68a</a>)</li>
+<li><strong>core:</strong> update formcontrol validators when fields change (<a href="https://github.com/formly-js/ngx-formly/commit/3c25646">3c25646</a>), closes <a href="https://github.com/formly-js/ngx-formly/issues/1059">#1059</a></li>
+<li><strong>demo:</strong> fixed material autocomplete stackblitz example (<a href="https://github.com/formly-js/ngx-formly/commit/8faf24e">8faf24e</a>), closes <a href="https://github.com/formly-js/ngx-formly/issues/1062">#1062</a></li>
+</ul>
+<h3 id="features">Features</h3>
+<ul>
+<li><strong>core:</strong> remove lifecycle hooks in FieldType (<a href="https://github.com/formly-js/ngx-formly/commit/009cf31">009cf31</a>)</li>
+<li>add nativescript support (<a href="https://github.com/formly-js/ngx-formly/commit/ae8a38e">ae8a38e</a>)</li>
+<li><strong>bootstrap:</strong> remove bootstrap v3 support (<a href="https://github.com/formly-js/ngx-formly/commit/1be7139">1be7139</a>), closes <a href="https://github.com/formly-js/ngx-formly/issues/679">#679</a></li>
+<li><strong>core:</strong> add access to the parent field from children (<a href="https://github.com/formly-js/ngx-formly/commit/56937aa">56937aa</a>), closes <a href="https://github.com/formly-js/ngx-formly/issues/764">#764</a></li>
+<li><strong>core:</strong> allow passing nested key in fieldGroup (<a href="https://github.com/formly-js/ngx-formly/commit/a09369a">a09369a</a>)</li>
+<li><strong>core:</strong> allow passing observable in expressionProperties (<a href="https://github.com/formly-js/ngx-formly/commit/daba83c">daba83c</a>), closes <a href="https://github.com/formly-js/ngx-formly/issues/1031">#1031</a></li>
+<li><strong>core:</strong> move formlySelectOptions pipe to core (<a href="https://github.com/formly-js/ngx-formly/commit/c8c937c">c8c937c</a>)</li>
+<li><strong>core:</strong> remove deprecated fieldForm input in FormlyValidationMessage (<a href="https://github.com/formly-js/ngx-formly/commit/d94c06f">d94c06f</a>)</li>
+<li><strong>core:</strong> support attr binding in formlyAttributes (<a href="https://github.com/formly-js/ngx-formly/commit/ae69ab6">ae69ab6</a>), closes <a href="https://github.com/formly-js/ngx-formly/issues/1066">#1066</a></li>
+<li>allow passing observable for radio options (<a href="https://github.com/formly-js/ngx-formly/commit/10be999">10be999</a>)</li>
+<li><strong>core:</strong> use the new providedIn with better lazyload support (<a href="https://github.com/formly-js/ngx-formly/commit/35c064e">35c064e</a>)</li>
+<li><strong>material:</strong> move multicheckbox into a separate module (<a href="https://github.com/formly-js/ngx-formly/commit/15698a1">15698a1</a>)</li>
+<li><strong>material:</strong> move textarea into a separate module (<a href="https://github.com/formly-js/ngx-formly/commit/c781017">c781017</a>)</li>
+</ul>
+<h3 id="breaking-changes">BREAKING CHANGES</h3>
+<ul>
+<li><strong>material:</strong> multicheckbox is not part of FormlyMatCheckboxModule</li>
+<li><strong>core:</strong> lifecycle hooks in FieldType has been removed</li>
+<li><strong>bootstrap:</strong> bootstrap v3 support is removed</li>
+<li><strong>core:</strong> <code>fieldForm</code> input in <code>FormlyValidationMessage</code> is removed</li>
+<li><strong>material:</strong> textarea is not part of FormlyMatInputModule</li>
+</ul>
 <p><a name="4.6.6"></a></p>
 <h2 id="4-6-6-2018-07-20-"><a href="https://github.com/formly-js/ngx-formly/compare/v4.6.5...v4.6.6">4.6.6</a> (2018-07-20)</h2>
 <ul>
