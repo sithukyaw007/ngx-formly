@@ -656,6 +656,9 @@
                             <li>
                                 <a href="#remove">remove</a>
                             </li>
+                            <li>
+                                <a href="#reset">reset</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -913,6 +916,44 @@
                 </tr>
             </tbody>
         </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="reset"></a>
+                        <span class="name">
+                            <b>
+                            reset
+                            </b>
+                            <a href="#reset"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>reset()</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/core/src/lib/templates/field-array.type.ts:38</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 </section>
 
 
@@ -959,6 +1000,15 @@ export abstract class FieldArrayType extends FieldType {
     this.field.fieldGroup.forEach((f, index) &#x3D;&gt; f.key &#x3D; &#x60;${index}&#x60;);
     this.model.splice(i, 1);
     (&lt;any&gt; this.options).resetTrackModelChanges();
+  }
+
+  reset() {
+    this.field.fieldGroup.length &#x3D; 0;
+    this.model.length &#x3D; 0;
+    const formControl &#x3D; &lt;FormArray&gt; this.field.formControl;
+    while (formControl.length !&#x3D;&#x3D; 0) {
+      formControl.removeAt(0);
+    }
   }
 }
 </code></pre>
