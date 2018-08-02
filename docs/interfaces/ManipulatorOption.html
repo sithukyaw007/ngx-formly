@@ -834,8 +834,8 @@ export class FormlyConfig {
       field.component &#x3D; this.types[name].component;
     }
 
-    if (!field.wrappers) {
-      field.wrappers &#x3D; this.types[name].wrappers;
+    if (!field.wrappers &amp;&amp; this.types[name].wrappers) {
+      field.wrappers &#x3D; [...this.types[name].wrappers];
     }
   }
 
@@ -863,7 +863,9 @@ export class FormlyConfig {
     if (!this.types[type].wrappers) {
       this.types[type].wrappers &#x3D; &lt;[string]&gt;[];
     }
-    this.types[type].wrappers.push(name);
+    if (this.types[type].wrappers.indexOf(name) &#x3D;&#x3D;&#x3D; -1) {
+      this.types[type].wrappers.push(name);
+    }
   }
 
   setValidator(options: ValidatorOption) {

@@ -629,7 +629,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-49a8327cc6ea7efcfc9e9aca62b37efe">Unamed property</a>
+                                        <a href="#call-declaration-4b254e830abb575890631e3ed6a14f2d">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -648,7 +648,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-49a8327cc6ea7efcfc9e9aca62b37efe"></a>
+                                            <a name="call-declaration-4b254e830abb575890631e3ed6a14f2d"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [c: AbstractControl, field: FormlyFieldConfig]
@@ -788,8 +788,8 @@ export class FormlyConfig {
       field.component &#x3D; this.types[name].component;
     }
 
-    if (!field.wrappers) {
-      field.wrappers &#x3D; this.types[name].wrappers;
+    if (!field.wrappers &amp;&amp; this.types[name].wrappers) {
+      field.wrappers &#x3D; [...this.types[name].wrappers];
     }
   }
 
@@ -817,7 +817,9 @@ export class FormlyConfig {
     if (!this.types[type].wrappers) {
       this.types[type].wrappers &#x3D; &lt;[string]&gt;[];
     }
-    this.types[type].wrappers.push(name);
+    if (this.types[type].wrappers.indexOf(name) &#x3D;&#x3D;&#x3D; -1) {
+      this.types[type].wrappers.push(name);
+    }
   }
 
   setValidator(options: ValidatorOption) {

@@ -806,7 +806,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/core/src/lib/services/formly.config.ts:159</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="161" class="link-to-prism">src/core/src/lib/services/formly.config.ts:161</a></div>
                             </td>
                         </tr>
 
@@ -1029,7 +1029,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="151" class="link-to-prism">src/core/src/lib/services/formly.config.ts:151</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="153" class="link-to-prism">src/core/src/lib/services/formly.config.ts:153</a></div>
                             </td>
                         </tr>
 
@@ -1098,7 +1098,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="163" class="link-to-prism">src/core/src/lib/services/formly.config.ts:163</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="165" class="link-to-prism">src/core/src/lib/services/formly.config.ts:165</a></div>
                             </td>
                         </tr>
 
@@ -1236,7 +1236,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="167" class="link-to-prism">src/core/src/lib/services/formly.config.ts:167</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="169" class="link-to-prism">src/core/src/lib/services/formly.config.ts:169</a></div>
                             </td>
                         </tr>
 
@@ -1455,7 +1455,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/core/src/lib/services/formly.config.ts:147</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">src/core/src/lib/services/formly.config.ts:149</a></div>
                             </td>
                         </tr>
 
@@ -1940,8 +1940,8 @@ export class FormlyConfig {
       field.component &#x3D; this.types[name].component;
     }
 
-    if (!field.wrappers) {
-      field.wrappers &#x3D; this.types[name].wrappers;
+    if (!field.wrappers &amp;&amp; this.types[name].wrappers) {
+      field.wrappers &#x3D; [...this.types[name].wrappers];
     }
   }
 
@@ -1969,7 +1969,9 @@ export class FormlyConfig {
     if (!this.types[type].wrappers) {
       this.types[type].wrappers &#x3D; &lt;[string]&gt;[];
     }
-    this.types[type].wrappers.push(name);
+    if (this.types[type].wrappers.indexOf(name) &#x3D;&#x3D;&#x3D; -1) {
+      this.types[type].wrappers.push(name);
+    }
   }
 
   setValidator(options: ValidatorOption) {
