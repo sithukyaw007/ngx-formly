@@ -750,7 +750,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/core/src/lib/components/formly.form.ts:34</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/core/src/lib/components/formly.form.ts:44</a></div>
                             </td>
                         </tr>
 
@@ -1015,7 +1015,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/core/src/lib/components/formly.form.ts:71</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/core/src/lib/components/formly.form.ts:82</a></div>
                             </td>
                         </tr>
 
@@ -1084,7 +1084,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">src/core/src/lib/components/formly.form.ts:77</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/core/src/lib/components/formly.form.ts:87</a></div>
                             </td>
                         </tr>
 
@@ -1142,6 +1142,16 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
   private initialModel: any;
   private modelChangeSubs: Subscription[] &#x3D; [];
 
+  private enableCheckExprDebounce &#x3D; false;
+  private checkExpressionChange$ &#x3D; this.modelChange.pipe(
+    debounceTime(this.enableCheckExprDebounce ? 100 : 0),
+    tap(() &#x3D;&gt; {
+      this.enableCheckExprDebounce &#x3D; true;
+      this.checkExpressionChange();
+      this.enableCheckExprDebounce &#x3D; false;
+    }),
+  ).subscribe();
+
   constructor(
     private formlyBuilder: FormlyFormBuilder,
     private formlyExpression: FormlyFormExpression,
@@ -1175,12 +1185,12 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 
   ngOnDestroy() {
     this.clearModelSubscriptions();
+    this.checkExpressionChange$.unsubscribe();
   }
 
   changeModel(event: { key: string, value: any }) {
     assignModelValue(this.model, event.key, event.value);
     this.modelChange.emit(this.model);
-    this.checkExpressionChange();
   }
 
   setOptions() {

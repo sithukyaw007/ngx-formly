@@ -915,8 +915,8 @@ export class FormlyFormBuilder {
         this.initFieldsType(field.fieldGroup);
       }
 
-      if (field.fieldArray &amp;&amp; field.fieldArray.fieldGroup) {
-        this.initFieldsType(field.fieldArray.fieldGroup);
+      if (field.fieldArray) {
+        this.initFieldsType([field.fieldArray]);
       }
     });
   }
@@ -990,14 +990,8 @@ export class FormlyFormBuilder {
     // https://github.com/angular-redux/store/blob/master/src/decorators/select.ts#L79-L85
     if (delete field.templateOptions.disabled) {
       Object.defineProperty(field.templateOptions, &#x27;disabled&#x27;, {
-        get: (function () { return !this.formControl.enabled; }).bind(field),
-        set: (function (value: boolean) {
-          if (this._expressionProperties &amp;&amp; this._expressionProperties.hasOwnProperty(&#x27;templateOptions.disabled&#x27;)) {
-            this._expressionProperties[&#x27;templateOptions.disabled&#x27;].expressionValue &#x3D; value;
-          }
-
-          value ? this.formControl.disable() : this.formControl.enable();
-        }).bind(field),
+        get: () &#x3D;&gt; !field.formControl.enabled,
+        set: (value: boolean) &#x3D;&gt; value ? field.formControl.disable() : field.formControl.enable(),
         enumerable: true,
         configurable: true,
       });
