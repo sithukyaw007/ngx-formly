@@ -653,7 +653,7 @@
             <tr>
                 <td class="col-md-3">template</td>
                 <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;formly-field *ngFor&#x3D;&quot;let field of fields&quot;
-  [model]&#x3D;&quot;field.model&quot; [form]&#x3D;&quot;form&quot;
+  [form]&#x3D;&quot;form&quot;
   [field]&#x3D;&quot;field&quot;
   [ngClass]&#x3D;&quot;field.className&quot;
   [options]&#x3D;&quot;options&quot;&gt;
@@ -1121,7 +1121,7 @@ import { debounceTime, map, tap } from &#x27;rxjs/operators&#x27;;
   selector: &#x27;formly-form&#x27;,
   template: &#x60;
     &lt;formly-field *ngFor&#x3D;&quot;let field of fields&quot;
-      [model]&#x3D;&quot;field.model&quot; [form]&#x3D;&quot;form&quot;
+      [form]&#x3D;&quot;form&quot;
       [field]&#x3D;&quot;field&quot;
       [ngClass]&#x3D;&quot;field.className&quot;
       [options]&#x3D;&quot;options&quot;&gt;
@@ -1345,7 +1345,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><formly-field *ngFor="let field of fields"  [model]="field.model" [form]="form"  [field]="field"  [ngClass]="field.className"  [options]="options"></formly-field><ng-content></ng-content></div>'
+        var COMPONENT_TEMPLATE = '<div><formly-field *ngFor="let field of fields"  [form]="form"  [field]="field"  [ngClass]="field.className"  [options]="options"></formly-field><ng-content></ng-content></div>'
     var COMPONENTS = [{'name': 'FormlyField', 'selector': 'formly-field'},{'name': 'FormlyForm', 'selector': 'formly-form'},{'name': 'FormlyGroup', 'selector': 'formly-group'},{'name': 'FormlyValidationMessage', 'selector': 'formly-validation-message'}];
     var DIRECTIVES = [{'name': 'FormlyAttributes', 'selector': '[formlyAttributes]'}];
     var ACTUAL_COMPONENT = {'name': 'FormlyForm'};
