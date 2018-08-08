@@ -1015,7 +1015,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/core/src/lib/components/formly.form.ts:82</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">src/core/src/lib/components/formly.form.ts:80</a></div>
                             </td>
                         </tr>
 
@@ -1084,7 +1084,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/core/src/lib/components/formly.form.ts:87</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/core/src/lib/components/formly.form.ts:85</a></div>
                             </td>
                         </tr>
 
@@ -1108,12 +1108,12 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, DoCheck, OnChanges, Input, SimpleChanges, Optional, EventEmitter, Output, SkipSelf, OnDestroy } from &#x27;@angular/core&#x27;;
-import { FormGroup, FormArray, NgForm, FormGroupDirective, FormControl, AbstractControl } from &#x27;@angular/forms&#x27;;
+import { FormGroup, FormArray, NgForm, FormGroupDirective } from &#x27;@angular/forms&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyValueChangeEvent } from &#x27;./formly.field.config&#x27;;
 import { FormlyFormBuilder } from &#x27;../services/formly.form.builder&#x27;;
 import { FormlyFormExpression } from &#x27;../services/formly.form.expression&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
-import { assignModelValue, isNullOrUndefined, reverseDeepMerge, getFieldModel, assignModelToFields } from &#x27;../utils&#x27;;
+import { assignModelValue, isNullOrUndefined, reverseDeepMerge } from &#x27;../utils&#x27;;
 import { Subject, Subscription } from &#x27;rxjs&#x27;;
 import { debounceTime, map, tap } from &#x27;rxjs/operators&#x27;;
 
@@ -1170,7 +1170,7 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
       return;
     }
 
-    if (changes.fields || changes.form) {
+    if (changes.fields || changes.form || changes.model) {
       this.model &#x3D; this.model || {};
       this.form &#x3D; this.form || (new FormGroup({}));
       this.setOptions();
@@ -1178,8 +1178,6 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
       this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
       this.trackModelChanges(this.fields);
       this.updateInitialValue();
-    } else if (changes.model) {
-      this.patchModel(this.model);
     }
   }
 
@@ -1261,19 +1259,16 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
     this.modelChangeSubs &#x3D; [];
   }
 
-  private patchModel(model: any) {
-    assignModelToFields(this.fields, model);
-    this.clearModelSubscriptions();
-    this.resetFieldArray(this.fields);
-    this.initializeFormValue(this.form);
-    (&lt;FormGroup&gt; this.form).patchValue(model, { onlySelf: true });
-    this.trackModelChanges(this.fields);
-  }
-
   private resetModel(model?: any) {
     model &#x3D; isNullOrUndefined(model) ? this.initialModel : model;
-    assignModelToFields(this.fields, model);
-    this.resetFieldArray(this.fields);
+    if (this.model) {
+      Object.keys(this.model).forEach(k &#x3D;&gt; delete this.model[k]);
+      Object.assign(this.model, model || {});
+    }
+
+    this.clearModelSubscriptions();
+    this.formlyBuilder.buildForm(this.form, this.fields, this.model, this.options);
+    this.trackModelChanges(this.fields);
 
     // we should call &#x60;NgForm::resetForm&#x60; to ensure changing &#x60;submitted&#x60; state after resetting form
     // but only when the current component is a root one.
@@ -1281,34 +1276,6 @@ export class FormlyForm implements DoCheck, OnChanges, OnDestroy {
       this.options.parentForm.resetForm(model);
     } else {
       this.form.reset(model);
-    }
-
-    (&lt;any&gt; this.options).resetTrackModelChanges();
-  }
-
-  private resetFieldArray(fields: FormlyFieldConfig[]) {
-    fields.forEach(field &#x3D;&gt; {
-      if (field.fieldArray) {
-        const formControl &#x3D; &lt;FormArray&gt; field.formControl;
-        while (formControl.length !&#x3D;&#x3D; 0) {
-          formControl.removeAt(0);
-        }
-        this.formlyBuilder.buildForm(field.formControl as FormArray, field.fieldGroup, field.model, this.options);
-      } else if (field.fieldGroup) {
-        this.resetFieldArray(field.fieldGroup);
-      } else if (field.key &amp;&amp; field.type) {
-        field.formControl.reset(getFieldModel(field.model, field, false));
-      }
-    });
-  }
-
-  private initializeFormValue(control: AbstractControl) {
-    if (control instanceof FormControl) {
-      control.setValue(null);
-    } else if (control instanceof FormGroup) {
-      Object.keys(control.controls).forEach(k &#x3D;&gt; this.initializeFormValue(control.controls[k]));
-    } else if (control instanceof FormArray) {
-      control.controls.forEach(c &#x3D;&gt; this.initializeFormValue(c));
     }
   }
 
