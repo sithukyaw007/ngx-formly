@@ -746,7 +746,7 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm, FormArray } from &#x27;@angular/forms&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm, FormArray, AsyncValidatorFn, ValidatorFn } from &#x27;@angular/forms&#x27;;
 import { Subject, Observable } from &#x27;rxjs&#x27;;
 import { Field } from &#x27;../templates/field&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
@@ -803,7 +803,7 @@ export interface FormlyFieldConfig {
    * Each should return a boolean value, returning true when the field is valid. See Validation for more information.
    *
    * {
-   *   validation?: (string | ValidatorFn)[] | ValidatorFn;
+   *   validation?: (string | ValidatorFn)[];
    *   [key: string]: ((control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; boolean) | ({ expression: (control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; boolean, message: string | ((error, field: FormlyFieldConfig) &#x3D;&gt; string) });
    * }
    */
@@ -814,7 +814,7 @@ export interface FormlyFieldConfig {
    * Pretty much exactly the same as the validators api, except it must be a function that returns a promise.
    *
    * {
-   *   validation?: (string | AsyncValidatorFn)[] | AsyncValidatorFn;
+   *   validation?: (string | AsyncValidatorFn)[];
    *   [key: string]: ((control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; Promise&lt;boolean&gt;) | ({ expression: (control: AbstractControl, field: FormlyFieldConfig) &#x3D;&gt; Promise&lt;boolean&gt;, message: string });
    * }
    */
@@ -921,7 +921,9 @@ export interface ExpressionPropertyCache {
 }
 
 export interface FormlyFieldConfigCache extends FormlyFieldConfig {
-  _expressionProperties: { [property: string]: ExpressionPropertyCache };
+  _expressionProperties?: { [property: string]: ExpressionPropertyCache };
+  _validators?: ValidatorFn[];
+  _asyncValidators?: AsyncValidatorFn[];
 }
 
 export type FormlyAttributeEvent &#x3D; (field: FormlyFieldConfig, event?: any) &#x3D;&gt; void;
