@@ -839,7 +839,7 @@ import { FormGroup, FormArray, FormControl, AbstractControl, Validators, Abstrac
 import { FormlyConfig, FieldValidatorFn, TemplateManipulators } from &#x27;./formly.config&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache } from &#x27;../components/formly.field.config&#x27;;
 import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
-import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, assignModelToFields, getKeyPath } from &#x27;../utils&#x27;;
+import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, getKeyPath, getFieldModel, assignModelValue, isUndefined, getValueForKey, clone } from &#x27;../utils&#x27;;
 
 @Injectable({ providedIn: &#x27;root&#x27; })
 export class FormlyFormBuilder {
@@ -862,7 +862,7 @@ export class FormlyFormBuilder {
     });
 
     this.initFieldsType(fields);
-    assignModelToFields(fields, model);
+    this._assignModelToFields(fields, model);
     this._buildForm(form, fields, options);
     this.formlyFormExpression.initFields(form, fields, model, options);
   }
@@ -914,9 +914,38 @@ export class FormlyFormBuilder {
       if (field.fieldGroup) {
         this.initFieldsType(field.fieldGroup);
       }
+    });
+  }
 
-      if (field.fieldArray) {
-        this.initFieldsType([field.fieldArray]);
+  private _assignModelToFields(fields: FormlyFieldConfig[], model: any, parent?: FormlyFieldConfig) {
+    fields.forEach((field) &#x3D;&gt; {
+      if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(getValueForKey(model, field.key))) {
+        assignModelValue(model, field.key, field.defaultValue);
+      }
+
+      Object.defineProperty(field, &#x27;parent&#x27;, { get: () &#x3D;&gt; parent, configurable: true });
+      Object.defineProperty(field, &#x27;model&#x27;, {
+        get: () &#x3D;&gt; field.key &amp;&amp; (field.fieldGroup || field.fieldArray) ? getFieldModel(model, field, true) : model,
+        configurable: true,
+      });
+
+      if (field.key &amp;&amp; field.fieldArray) {
+        while (field.formControl &amp;&amp; (&lt;FormArray&gt; field.formControl).length !&#x3D;&#x3D; 0) {
+          (&lt;FormArray&gt; field.formControl).removeAt(0);
+        }
+
+        field.fieldGroup &#x3D; field.fieldGroup || [];
+        field.fieldGroup.length &#x3D; 0;
+        field.model.forEach((m: any, i: number) &#x3D;&gt; {
+          const f &#x3D; { ...clone(field.fieldArray), key: &#x60;${i}&#x60; };
+          this.initFieldsType([f]);
+
+          field.fieldGroup.push(f);
+        });
+      }
+
+      if (field.fieldGroup) {
+        this._assignModelToFields(field.fieldGroup, field.model, field);
       }
     });
   }
