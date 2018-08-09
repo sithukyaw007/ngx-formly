@@ -174,6 +174,9 @@
                         <a href="classes/FieldArrayType.html" data-type="entity-link">FieldArrayType</a>
                     </li>
                     <li class="link">
+                        <a href="classes/FieldType.html" data-type="entity-link">FieldType</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/FieldWrapper.html" data-type="entity-link">FieldWrapper</a>
                     </li>
             </ul>
@@ -459,6 +462,9 @@
                         <a href="classes/FieldArrayType.html" data-type="entity-link">FieldArrayType</a>
                     </li>
                     <li class="link">
+                        <a href="classes/FieldType.html" data-type="entity-link">FieldType</a>
+                    </li>
+                    <li class="link">
                         <a href="classes/FieldWrapper.html" data-type="entity-link">FieldWrapper</a>
                     </li>
             </ul>
@@ -635,7 +641,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-9351ea0cb95fb158d3acca8907669c19">Unamed property</a>
+                                        <a href="#call-declaration-72fc26d2dd49083794817221b7266bb6">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -654,7 +660,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-9351ea0cb95fb158d3acca8907669c19"></a>
+                                            <a name="call-declaration-72fc26d2dd49083794817221b7266bb6"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -682,7 +688,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { FormGroup, AbstractControl, FormGroupDirective, NgForm, FormArray, AsyncValidatorFn, ValidatorFn } from &#x27;@angular/forms&#x27;;
 import { Subject, Observable } from &#x27;rxjs&#x27;;
-import { Field } from &#x27;../templates/field&#x27;;
+import { FieldType } from &#x27;../templates/field.type&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
 
 export interface FormlyFieldConfig {
@@ -913,7 +919,7 @@ export interface FormlyFormOptions {
   formState?: any;
   fieldChanges?: Subject&lt;FormlyValueChangeEvent&gt;;
   fieldTransform?: (fields: FormlyFieldConfig[], model: any, form: FormGroup | FormArray, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[];
-  showError?: (field: Field) &#x3D;&gt; boolean;
+  showError?: (field: FieldType) &#x3D;&gt; boolean;
   parentForm?: FormGroupDirective | NgForm | null;
 }
 
