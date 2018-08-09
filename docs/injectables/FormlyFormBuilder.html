@@ -930,18 +930,20 @@ export class FormlyFormBuilder {
       });
 
       if (field.key &amp;&amp; field.fieldArray) {
-        while (field.formControl &amp;&amp; (&lt;FormArray&gt; field.formControl).length !&#x3D;&#x3D; 0) {
-          (&lt;FormArray&gt; field.formControl).removeAt(0);
+        field.fieldGroup &#x3D; field.fieldGroup || [];
+        if (field.fieldGroup.length &gt; field.model.length) {
+          for (let i &#x3D; field.fieldGroup.length; i &gt;&#x3D; field.model.length; --i) {
+            (&lt;FormArray&gt; field.formControl).removeAt(i);
+            field.fieldGroup.splice(i, 1);
+          }
         }
 
-        field.fieldGroup &#x3D; field.fieldGroup || [];
-        field.fieldGroup.length &#x3D; 0;
-        field.model.forEach((m: any, i: number) &#x3D;&gt; {
+        for (let i &#x3D; field.fieldGroup.length; i &lt; field.model.length; i++) {
           const f &#x3D; { ...clone(field.fieldArray), key: &#x60;${i}&#x60; };
           this.initFieldsType([f]);
 
           field.fieldGroup.push(f);
-        });
+        }
       }
 
       if (field.fieldGroup) {
