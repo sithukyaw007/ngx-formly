@@ -845,7 +845,7 @@ import { FormGroup, FormArray, FormControl, AbstractControl, Validators, Abstrac
 import { FormlyConfig, FieldValidatorFn, TemplateManipulators } from &#x27;./formly.config&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache } from &#x27;../components/formly.field.config&#x27;;
 import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
-import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, getKeyPath, getFieldModel, assignModelValue, isUndefined, getValueForKey, clone, removeFieldControl } from &#x27;../utils&#x27;;
+import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, getKeyPath, assignModelValue, isUndefined, clone, removeFieldControl, getFieldValue } from &#x27;../utils&#x27;;
 
 @Injectable({ providedIn: &#x27;root&#x27; })
 export class FormlyFormBuilder {
@@ -913,12 +913,9 @@ export class FormlyFormBuilder {
   private initFieldOptions(root: FormlyFieldConfig, field: FormlyFieldConfig, index: number) {
     Object.defineProperty(field, &#x27;parent&#x27;, { get: () &#x3D;&gt; root, configurable: true });
     Object.defineProperty(field, &#x27;model&#x27;, {
-      get: () &#x3D;&gt; field.key &amp;&amp; field.fieldGroup ? getFieldModel(root.model, field, true) : root.model,
+      get: () &#x3D;&gt; field.key &amp;&amp; field.fieldGroup ? getFieldValue(field) : root.model,
       configurable: true,
     });
-    if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(getValueForKey(field.model, field.key))) {
-      assignModelValue(field.model, field.key, field.defaultValue);
-    }
 
     field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
     field.templateOptions &#x3D; field.templateOptions || {};
@@ -933,6 +930,13 @@ export class FormlyFormBuilder {
     }
     if (field.type) {
       this.formlyConfig.getMergedField(field);
+    }
+    if (field.key &amp;&amp; isUndefined(field.defaultValue) &amp;&amp; (field.fieldGroup || field.fieldArray)) {
+      field.defaultValue &#x3D; field.fieldArray ? [] : {};
+    }
+
+    if (!isUndefined(field.defaultValue) &amp;&amp; isUndefined(getFieldValue(field))) {
+      assignModelValue(root.model, field.key, field.defaultValue);
     }
 
     this.initFieldWrappers(field);
