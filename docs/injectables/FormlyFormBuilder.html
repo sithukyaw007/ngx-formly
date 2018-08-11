@@ -224,6 +224,9 @@
                         <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExtensionOption.html" data-type="entity-link">ExtensionOption</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
@@ -516,6 +519,9 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/ExtensionOption.html" data-type="entity-link">ExtensionOption</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
@@ -872,9 +878,9 @@ export class FormlyFormBuilder {
   private _buildForm(root: FormlyFieldConfigCache) {
     this.formId++;
     root.fieldGroup.forEach((field, index) &#x3D;&gt; {
-      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.prePopulate &amp;&amp; extension.prePopulate(field));
+      this.getExtensions().forEach(extension &#x3D;&gt; extension.prePopulate &amp;&amp; extension.prePopulate(field));
       this.initFieldOptions(root, field, index);
-      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
+      this.getExtensions().forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
       this.initFieldValidation(field);
       this.initFieldAsyncValidation(field);
       if (field.key &amp;&amp; field.type) {
@@ -908,8 +914,12 @@ export class FormlyFormBuilder {
       if (field.fieldGroup) {
         this._buildForm(field);
       }
-      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.postPopulate &amp;&amp; extension.postPopulate(field));
+      this.getExtensions().forEach(extension &#x3D;&gt; extension.postPopulate &amp;&amp; extension.postPopulate(field));
     });
+  }
+
+  private getExtensions() {
+    return Object.keys(this.formlyConfig.extensions).map(name &#x3D;&gt; this.formlyConfig.extensions[name]);
   }
 
   private initFieldOptions(root: FormlyFieldConfigCache, field: FormlyFieldConfig, index: number) {

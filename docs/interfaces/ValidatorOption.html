@@ -224,6 +224,9 @@
                         <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExtensionOption.html" data-type="entity-link">ExtensionOption</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
@@ -518,6 +521,9 @@
                         <a href="interfaces/ExpressionPropertyCache.html" data-type="entity-link">ExpressionPropertyCache</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/ExtensionOption.html" data-type="entity-link">ExtensionOption</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
@@ -773,7 +779,9 @@ export class FormlyConfig {
       return field.formControl &amp;&amp; field.formControl.invalid &amp;&amp; (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show));
     },
   };
-  extensions: FormlyExtension[] &#x3D; [new FieldExpressionExtension()];
+  extensions: { [name: string]: FormlyExtension } &#x3D; {
+    &#x27;field-expression&#x27;: new FieldExpressionExtension(),
+  };
 
   addConfig(config: ConfigOption) {
     if (config.types) {
@@ -792,7 +800,7 @@ export class FormlyConfig {
       config.validationMessages.forEach(validation &#x3D;&gt; this.addValidatorMessage(validation.name, validation.message));
     }
     if (config.extensions) {
-      this.extensions &#x3D; [...this.extensions, ...config.extensions];
+      config.extensions.forEach(c &#x3D;&gt; this.extensions[c.name] &#x3D; c.extension);
     }
     if (config.extras) {
       this.extras &#x3D; { ...this.extras, ...config.extras };
@@ -954,6 +962,11 @@ export interface ValidatorOption {
   validation: FieldValidatorFn;
 }
 
+export interface ExtensionOption {
+  name: string;
+  extension: FormlyExtension;
+}
+
 export interface ValidationMessageOption {
   name: string;
   message: string | ((error: any, field: FormlyFieldConfig) &#x3D;&gt; string);
@@ -977,7 +990,7 @@ export interface ConfigOption {
   types?: TypeOption[];
   wrappers?: WrapperOption[];
   validators?: ValidatorOption[];
-  extensions?: FormlyExtension[];
+  extensions?: ExtensionOption[];
   validationMessages?: ValidationMessageOption[];
   manipulators?: ManipulatorOption[];
   extras?: {

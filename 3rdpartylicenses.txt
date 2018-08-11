@@ -1,4 +1,4 @@
-@ionic/core@4.0.0-beta.1
+@ionic/core@4.0.0-beta.2
 MIT
 Copyright 2015-present Drifty Co.
 http://drifty.com/
@@ -399,7 +399,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/platform-browser@6.1.1
+@angular/platform-browser@6.1.2
 MIT
 MIT
 
@@ -461,15 +461,15 @@ If the Work includes a "NOTICE" text file as part of its distribution, then any 
 
 END OF TERMS AND CONDITIONS
 
-@angular/common@6.1.1
+@angular/common@6.1.2
 MIT
 MIT
 
-@angular/router@6.1.1
+@angular/router@6.1.2
 MIT
 MIT
 
-@angular/animations@6.1.1
+@angular/animations@6.1.2
 MIT
 MIT
 
@@ -497,10 +497,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/forms@6.1.1
+@angular/forms@6.1.2
 MIT
 MIT
 
-@angular/core@6.1.1
+@angular/core@6.1.2
 MIT
 MIT
