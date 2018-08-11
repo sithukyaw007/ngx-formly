@@ -239,6 +239,9 @@
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyFormOptionsCache.html" data-type="entity-link">FormlyFormOptionsCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyLifeCycleFn.html" data-type="entity-link">FormlyLifeCycleFn</a>
                     </li>
                     <li class="link">
@@ -530,6 +533,9 @@
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyFormOptionsCache.html" data-type="entity-link">FormlyFormOptionsCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyLifeCycleFn.html" data-type="entity-link">FormlyLifeCycleFn</a>
                     </li>
                     <li class="link">
@@ -647,7 +653,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-72fc26d2dd49083794817221b7266bb6">Unamed property</a>
+                                        <a href="#call-declaration-60737ad1e06a64337b9127d130d7fd5d">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -666,7 +672,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-72fc26d2dd49083794817221b7266bb6"></a>
+                                            <a name="call-declaration-60737ad1e06a64337b9127d130d7fd5d"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -867,6 +873,7 @@ export interface ExpressionPropertyCache {
 }
 
 export interface FormlyFieldConfigCache extends FormlyFieldConfig {
+  options?: FormlyFormOptionsCache;
   _expressionProperties?: { [property: string]: ExpressionPropertyCache };
   _validators?: ValidatorFn[];
   _asyncValidators?: AsyncValidatorFn[];
@@ -917,8 +924,13 @@ export interface FormlyLifeCycleOptions {
   afterViewInit?: FormlyLifeCycleFn;
   afterViewChecked?: FormlyLifeCycleFn;
   onDestroy?: FormlyLifeCycleFn;
+  [additionalProperties: string]: any;
 }
 
+export interface FormlyFormOptionsCache extends FormlyFormOptions {
+  _checkField?: (field: FormlyFieldConfigCache) &#x3D;&gt; void;
+  _buildForm?: () &#x3D;&gt; void;
+}
 export interface FormlyFormOptions {
   updateInitialValue?: () &#x3D;&gt; void;
   resetModel?: (model?: any) &#x3D;&gt; void;

@@ -239,6 +239,9 @@
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyFormOptionsCache.html" data-type="entity-link">FormlyFormOptionsCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyLifeCycleFn.html" data-type="entity-link">FormlyLifeCycleFn</a>
                     </li>
                     <li class="link">
@@ -530,6 +533,9 @@
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyFormOptionsCache.html" data-type="entity-link">FormlyFormOptionsCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyLifeCycleFn.html" data-type="entity-link">FormlyLifeCycleFn</a>
                     </li>
                     <li class="link">
@@ -664,12 +670,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>, formlyFormExpression: <a href="../components/FormlyForm.html">FormlyFormExpression</a>)</code>
+<code>constructor(formlyConfig: <a href="../injectables/FormlyConfig.html">FormlyConfig</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/core/src/lib/services/formly.form.builder.ts:10</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/core/src/lib/services/formly.form.builder.ts:9</a></div>
                             </td>
                         </tr>
 
@@ -691,18 +697,6 @@
                                                   
                                                         <td>
                                                                     <code><a href="../injectables/FormlyConfig.html" target="_self" >FormlyConfig</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            no
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>formlyFormExpression</td>
-                                                  
-                                                        <td>
-                                                                    <code><a href="../components/FormlyForm.html" target="_self" >FormlyFormExpression</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -739,14 +733,14 @@
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>buildForm(form: FormGroup | FormArray, fields: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig[]</a>, model: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, options: <a href="../interfaces/FormlyFormOptions.html">FormlyFormOptions</a>)</code>
+<code>buildForm(formControl: FormGroup | FormArray, fieldGroup: <a href="../interfaces/FormlyFieldConfig.html">FormlyFieldConfig[]</a>, model: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, options: <a href="../interfaces/FormlyFormOptions.html">FormlyFormOptions</a>)</code>
                     </td>
                 </tr>
 
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/core/src/lib/services/formly.form.builder.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/lib/services/formly.form.builder.ts:13</a></div>
                             </td>
                         </tr>
 
@@ -767,7 +761,7 @@
                                         </thead>
                                         <tbody>
                                                 <tr>
-                                                        <td>form</td>
+                                                        <td>formControl</td>
                                                         <td>
                                                                     <code>FormGroup | FormArray</code>
                                                         </td>
@@ -781,7 +775,7 @@
 
                                                 </tr>
                                                 <tr>
-                                                        <td>fields</td>
+                                                        <td>fieldGroup</td>
                                                         <td>
                                                                     <code><a href="../interfaces/FormlyFieldConfig.html" target="_self" >FormlyFieldConfig[]</a></code>
                                                         </td>
@@ -849,42 +843,40 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators, AbstractControlOptions } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig, FieldValidatorFn, TemplateManipulators } from &#x27;./formly.config&#x27;;
-import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache } from &#x27;../components/formly.field.config&#x27;;
-import { FormlyFormExpression } from &#x27;./formly.form.expression&#x27;;
+import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache, FormlyFormOptionsCache } from &#x27;../components/formly.field.config&#x27;;
 import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, getKeyPath, assignModelValue, isUndefined, clone, removeFieldControl, getFieldValue } from &#x27;../utils&#x27;;
 
 @Injectable({ providedIn: &#x27;root&#x27; })
 export class FormlyFormBuilder {
   private formId &#x3D; 0;
 
-  constructor(
-    private formlyConfig: FormlyConfig,
-    private formlyFormExpression: FormlyFormExpression,
-  ) {}
+  constructor(private formlyConfig: FormlyConfig) {}
 
-  buildForm(form: FormGroup | FormArray, fields: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
+  buildForm(formControl: FormGroup | FormArray, fieldGroup: FormlyFieldConfig[] &#x3D; [], model: any, options: FormlyFormOptions) {
     const fieldTransforms &#x3D; (options &amp;&amp; options.fieldTransform) || this.formlyConfig.extras.fieldTransform;
     (Array.isArray(fieldTransforms) ? fieldTransforms : [fieldTransforms]).forEach(fieldTransform &#x3D;&gt; {
       if (fieldTransform) {
-        fields &#x3D; fieldTransform(fields, model, form, options);
-        if (!fields) {
+        fieldGroup &#x3D; fieldTransform(fieldGroup, model, formControl, options);
+        if (!fieldGroup) {
           throw new Error(&#x27;fieldTransform must return an array of fields&#x27;);
         }
       }
     });
 
-    this._buildForm({ fieldGroup: fields, model: model, formControl: form });
-    this.formlyFormExpression.initFields(form, fields, model, options);
+    this._buildForm({ fieldGroup, model, formControl, options });
+    if ((&lt;FormlyFormOptionsCache&gt;options)._checkField) {
+      (&lt;FormlyFormOptionsCache&gt; options)._checkField({ fieldGroup, model, formControl, options });
+    }
   }
 
-  private _buildForm(root: FormlyFieldConfig) {
+  private _buildForm(root: FormlyFieldConfigCache) {
     this.formId++;
     root.fieldGroup.forEach((field, index) &#x3D;&gt; {
       this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.prePopulate &amp;&amp; extension.prePopulate(field));
       this.initFieldOptions(root, field, index);
+      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
       this.initFieldValidation(field);
       this.initFieldAsyncValidation(field);
-      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
       if (field.key &amp;&amp; field.type) {
         const paths &#x3D; getKeyPath({ key: field.key });
         let rootForm &#x3D; root.formControl as FormGroup, rootModel &#x3D; field.fieldGroup ? { [paths[0]]: field.model } : field.model;
@@ -894,9 +886,7 @@ export class FormlyFormBuilder {
           // is last item
           if (index &#x3D;&#x3D;&#x3D; paths.length - 1) {
             this.addFormControl(rootForm, field, rootModel, formPath);
-            if (field.fieldGroup) {
-              this._buildForm(field);
-            }
+
           } else {
             let nestedForm &#x3D; rootForm.get(formPath) as FormGroup;
             if (!nestedForm) {
@@ -913,13 +903,17 @@ export class FormlyFormBuilder {
         });
       } else if (!field.key &amp;&amp; field.fieldGroup) {
         field.formControl &#x3D; root.formControl;
+      }
+
+      if (field.fieldGroup) {
         this._buildForm(field);
       }
       this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.postPopulate &amp;&amp; extension.postPopulate(field));
     });
   }
 
-  private initFieldOptions(root: FormlyFieldConfig, field: FormlyFieldConfig, index: number) {
+  private initFieldOptions(root: FormlyFieldConfigCache, field: FormlyFieldConfig, index: number) {
+    Object.defineProperty(field, &#x27;options&#x27;, { get: () &#x3D;&gt; root.options, configurable: true });
     Object.defineProperty(field, &#x27;parent&#x27;, { get: () &#x3D;&gt; root, configurable: true });
     Object.defineProperty(field, &#x27;model&#x27;, {
       get: () &#x3D;&gt; field.key &amp;&amp; field.fieldGroup ? getFieldValue(field) : root.model,

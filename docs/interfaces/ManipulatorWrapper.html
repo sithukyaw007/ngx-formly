@@ -239,6 +239,9 @@
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyFormOptionsCache.html" data-type="entity-link">FormlyFormOptionsCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyLifeCycleFn.html" data-type="entity-link">FormlyLifeCycleFn</a>
                     </li>
                     <li class="link">
@@ -530,6 +533,9 @@
                         <a href="interfaces/FormlyFormOptions.html" data-type="entity-link">FormlyFormOptions</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyFormOptionsCache.html" data-type="entity-link">FormlyFormOptionsCache</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyLifeCycleFn.html" data-type="entity-link">FormlyLifeCycleFn</a>
                     </li>
                     <li class="link">
@@ -647,7 +653,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-cdf1c5644ac14c8af5b689133d239e73">Unamed property</a>
+                                        <a href="#call-declaration-9b705f28157d179c802f03d97dd95c2b">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -666,7 +672,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-cdf1c5644ac14c8af5b689133d239e73"></a>
+                                            <a name="call-declaration-9b705f28157d179c802f03d97dd95c2b"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [f: FormlyFieldConfig]
@@ -697,9 +703,11 @@ import { ValidationErrors, FormGroup, FormArray, AbstractControl } from &#x27;@a
 import { FieldType } from &#x27;./../templates/field.type&#x27;;
 import { reverseDeepMerge } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.field.config&#x27;;
+import { FieldExpressionExtension } from &#x27;../extensions&#x27;;
 
 export const FORMLY_CONFIG_TOKEN &#x3D; new InjectionToken&lt;FormlyConfig&gt;(&#x27;FORMLY_CONFIG_TOKEN&#x27;);
 
+/** @experimental */
 export interface FormlyExtension {
   prePopulate?(field: FormlyFieldConfig): void;
   onPopulate?(field: FormlyFieldConfig): void;
@@ -731,7 +739,7 @@ export class FormlyConfig {
       return field.formControl &amp;&amp; field.formControl.invalid &amp;&amp; (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show));
     },
   };
-  extensions: FormlyExtension[] &#x3D; [];
+  extensions: FormlyExtension[] &#x3D; [new FieldExpressionExtension()];
 
   addConfig(config: ConfigOption) {
     if (config.types) {
