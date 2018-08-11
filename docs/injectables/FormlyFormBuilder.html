@@ -227,6 +227,9 @@
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyExtension.html" data-type="entity-link">FormlyExtension</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
                     </li>
                     <li class="link">
@@ -513,6 +516,9 @@
                     </li>
                     <li class="link">
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
+                    </li>
+                    <li class="link">
+                        <a href="interfaces/FormlyExtension.html" data-type="entity-link">FormlyExtension</a>
                     </li>
                     <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
@@ -874,9 +880,11 @@ export class FormlyFormBuilder {
   private _buildForm(root: FormlyFieldConfig) {
     this.formId++;
     root.fieldGroup.forEach((field, index) &#x3D;&gt; {
+      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.prePopulate &amp;&amp; extension.prePopulate(field));
       this.initFieldOptions(root, field, index);
       this.initFieldValidation(field);
       this.initFieldAsyncValidation(field);
+      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
       if (field.key &amp;&amp; field.type) {
         const paths &#x3D; getKeyPath({ key: field.key });
         let rootForm &#x3D; root.formControl as FormGroup, rootModel &#x3D; field.fieldGroup ? { [paths[0]]: field.model } : field.model;
@@ -907,6 +915,7 @@ export class FormlyFormBuilder {
         field.formControl &#x3D; root.formControl;
         this._buildForm(field);
       }
+      this.formlyConfig.extensions.forEach(extension &#x3D;&gt; extension.postPopulate &amp;&amp; extension.postPopulate(field));
     });
   }
 

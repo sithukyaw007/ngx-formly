@@ -227,6 +227,9 @@
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyExtension.html" data-type="entity-link">FormlyExtension</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
                     </li>
                     <li class="link">
@@ -515,6 +518,9 @@
                         <a href="interfaces/FieldValidatorFn.html" data-type="entity-link">FieldValidatorFn</a>
                     </li>
                     <li class="link">
+                        <a href="interfaces/FormlyExtension.html" data-type="entity-link">FormlyExtension</a>
+                    </li>
+                    <li class="link">
                         <a href="interfaces/FormlyFieldConfig.html" data-type="entity-link">FormlyFieldConfig</a>
                     </li>
                     <li class="link">
@@ -740,6 +746,12 @@ import { FormlyFieldConfig, FormlyFormOptions } from &#x27;../components/formly.
 
 export const FORMLY_CONFIG_TOKEN &#x3D; new InjectionToken&lt;FormlyConfig&gt;(&#x27;FORMLY_CONFIG_TOKEN&#x27;);
 
+export interface FormlyExtension {
+  prePopulate?(field: FormlyFieldConfig): void;
+  onPopulate?(field: FormlyFieldConfig): void;
+  postPopulate?(field: FormlyFieldConfig): void;
+}
+
 /**
  * Maintains list of formly field directive types. This can be used to register new field templates.
  */
@@ -749,7 +761,6 @@ export class FormlyConfig {
   validators: { [name: string]: ValidatorOption } &#x3D; {};
   wrappers: { [name: string]: WrapperOption } &#x3D; {};
   messages: { [name: string]: string | ((error: any, field: FormlyFieldConfig) &#x3D;&gt; string); } &#x3D; {};
-
   templateManipulators: {
     preWrapper: ManipulatorWrapper[];
     postWrapper: ManipulatorWrapper[];
@@ -757,7 +768,6 @@ export class FormlyConfig {
     preWrapper: [],
     postWrapper: [],
   };
-
   extras: {
     fieldTransform?: ((fields: FormlyFieldConfig[], model: any, form: FormGroup | FormArray, options: FormlyFormOptions) &#x3D;&gt; FormlyFieldConfig[])[],
     showError?: (field: FieldType) &#x3D;&gt; boolean;
@@ -767,6 +777,7 @@ export class FormlyConfig {
       return field.formControl &amp;&amp; field.formControl.invalid &amp;&amp; (field.formControl.touched || (field.options.parentForm &amp;&amp; field.options.parentForm.submitted) || (field.field.validation &amp;&amp; field.field.validation.show));
     },
   };
+  extensions: FormlyExtension[] &#x3D; [];
 
   addConfig(config: ConfigOption) {
     if (config.types) {
@@ -783,6 +794,9 @@ export class FormlyConfig {
     }
     if (config.validationMessages) {
       config.validationMessages.forEach(validation &#x3D;&gt; this.addValidatorMessage(validation.name, validation.message));
+    }
+    if (config.extensions) {
+      this.extensions &#x3D; [...this.extensions, ...config.extensions];
     }
     if (config.extras) {
       this.extras &#x3D; { ...this.extras, ...config.extras };
@@ -967,6 +981,7 @@ export interface ConfigOption {
   types?: TypeOption[];
   wrappers?: WrapperOption[];
   validators?: ValidatorOption[];
+  extensions?: FormlyExtension[];
   validationMessages?: ValidationMessageOption[];
   manipulators?: ManipulatorOption[];
   extras?: {
