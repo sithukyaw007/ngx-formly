@@ -1006,8 +1006,8 @@ export class FormlyFormBuilder {
         }
         control.updateValueAndValidity();
       }
-    } else if (field.component &amp;&amp; field.component.createControl) {
-      control &#x3D; field.component.createControl(model[path], field);
+    } else if ((&lt;any&gt;field).component &amp;&amp; (&lt;any&gt;field).component.createControl) {
+      control &#x3D; (&lt;any&gt;field).component.createControl(model[path], field);
     } else if (field.fieldGroup &amp;&amp; !field.fieldArray) {
       control &#x3D; new FormGroup({}, abstractControlOptions);
     } else if (field.fieldArray) {

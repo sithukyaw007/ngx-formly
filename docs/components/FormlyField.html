@@ -1125,8 +1125,6 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
       return;
     }
 
-    const type &#x3D; this.formlyConfig.getType(this.field.type);
-
     let fieldComponent &#x3D; this.fieldComponent;
     (this.field.wrappers || []).forEach(wrapperName &#x3D;&gt; {
       const wrapper &#x3D; this.formlyConfig.getWrapper(wrapperName);
@@ -1134,7 +1132,8 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
       fieldComponent &#x3D; wrapperRef.instance.fieldComponent;
     });
 
-    return this.createComponent(type.componentFactoryResolver, fieldComponent, type.component);
+    const type &#x3D; this.formlyConfig.getType(this.field.type);
+    this.createComponent(type.componentFactoryResolver, fieldComponent, type.component);
   }
 
   private createComponent(componentFactoryResolver: ComponentFactoryResolver, fieldComponent: ViewContainerRef, component: any): ComponentRef&lt;any&gt; {

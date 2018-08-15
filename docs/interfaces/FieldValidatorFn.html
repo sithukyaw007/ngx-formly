@@ -659,7 +659,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-ac26bdc2869473828b97591d225755a6">Unamed property</a>
+                                        <a href="#call-declaration-78005f98c9218bc4f7709762c1b8bf2b">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -678,7 +678,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-ac26bdc2869473828b97591d225755a6"></a>
+                                            <a name="call-declaration-78005f98c9218bc4f7709762c1b8bf2b"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [c: AbstractControl, field: FormlyFieldConfig]
@@ -826,9 +826,7 @@ export class FormlyConfig {
       });
     }
 
-    if (!field.component) {
-      field.component &#x3D; this.types[name].component;
-    }
+    (&lt;any&gt; field).component &#x3D; this.types[name].component;
 
     if (!field.wrappers &amp;&amp; this.types[name].wrappers) {
       field.wrappers &#x3D; [...this.types[name].wrappers];
