@@ -950,16 +950,30 @@ export class FormlyAttributes implements OnChanges {
 
       this.renderer.setAttribute(this.elementRef.nativeElement, &#x27;id&#x27;, this.field.id);
       if (this.to &amp;&amp; this.to.attributes) {
-        const attributes &#x3D; this.to.attributes;
-        Object.keys(attributes).forEach(name &#x3D;&gt; this.renderer.setAttribute(
-          this.elementRef.nativeElement, name, attributes[name] as string,
-        ));
+        this.setAttributes(this.to.attributes);
+        Object.defineProperty(this.to, &#x27;attributes&#x27;, {
+          get: () &#x3D;&gt; this.to.__attributes__,
+          set: attributes &#x3D;&gt; this.setAttributes(attributes),
+          enumerable: true,
+          configurable: true,
+        });
       }
 
       if ((fieldChanges.previousValue || {}).focus !&#x3D;&#x3D; (fieldChanges.currentValue || {}).focus &amp;&amp; this.elementRef.nativeElement.focus) {
         this.elementRef.nativeElement[this.field.focus ? &#x27;focus&#x27; : &#x27;blur&#x27;]();
       }
     }
+  }
+
+  private setAttributes(attributes) {
+    if (this.to.__attributes__ &amp;&amp; this.to.__attributes__ !&#x3D;&#x3D; attributes) {
+      Object.keys(this.to.__attributes__).forEach(name &#x3D;&gt; this.renderer.removeAttribute(this.elementRef.nativeElement, name));
+    }
+
+    this.to.__attributes__ &#x3D; attributes;
+    Object.keys(attributes).forEach(name &#x3D;&gt; this.renderer.setAttribute(
+      this.elementRef.nativeElement, name, attributes[name] as string,
+    ));
   }
 }
 </code></pre>
