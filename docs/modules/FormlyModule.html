@@ -92,14 +92,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-components-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        data-target="#xs-components-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
                                     >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-components-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        id="xs-components-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
                                     >
                                         <li class="link">
                                             <a href="components/FormlyField.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyField</a>
@@ -117,14 +117,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#xs-directives-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        data-target="#xs-directives-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
                                     >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="xs-directives-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        id="xs-directives-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
                                     >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -172,6 +172,9 @@
                     </li>
                     <li class="link">
                         <a href="classes/FieldArrayType.html" data-type="entity-link">FieldArrayType</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/FieldExpressionExtension.html" data-type="entity-link">FieldExpressionExtension</a>
                     </li>
                     <li class="link">
                         <a href="classes/FieldType.html" data-type="entity-link">FieldType</a>
@@ -389,14 +392,14 @@
                         <a href="modules/FormlyModule.html" data-type="entity-link">FormlyModule</a>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#components-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        data-target="#components-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
 >
                                     <span class="fa fa-fw fa-cogs"></span>
                                     <span>Components</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="components-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        id="components-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
 >
                                         <li class="link">
                                             <a href="components/FormlyField.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyField</a>
@@ -414,14 +417,14 @@
                             </li>
                             <li class="chapter inner">
                                 <div class="simple menu-toggler" data-toggle="collapse"
-                                        data-target="#directives-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        data-target="#directives-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
 >
                                     <span class="fa fa-fw fa-code"></span>
                                     <span>Directives</span>
                                     <span class="fa fa-angle-down"></span>
                                 </div>
                                 <ul class="links collapse"
-                                        id="directives-links-module-FormlyModule-cd35a4fc901ef5ef5d5e0c4ad71162cf"
+                                        id="directives-links-module-FormlyModule-ee2d97237a741e4daf85850187e09038"
 >
                                         <li class="link">
                                             <a href="directives/FormlyAttributes.html" data-type="entity-link" data-context="sub-entity" data-context-id="modules">FormlyAttributes</a>
@@ -469,6 +472,9 @@
                     </li>
                     <li class="link">
                         <a href="classes/FieldArrayType.html" data-type="entity-link">FieldArrayType</a>
+                    </li>
+                    <li class="link">
+                        <a href="classes/FieldExpressionExtension.html" data-type="entity-link">FieldExpressionExtension</a>
                     </li>
                     <li class="link">
                         <a href="classes/FieldType.html" data-type="entity-link">FieldType</a>
@@ -875,31 +881,35 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule, ModuleWithProviders, ANALYZE_FOR_ENTRY_COMPONENTS, Inject, Optional, ComponentFactoryResolver } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { ReactiveFormsModule } from &#x27;@angular/forms&#x27;;
 import { FormlyForm } from &#x27;./components/formly.form&#x27;;
 import { FormlyField } from &#x27;./components/formly.field&#x27;;
 import { FormlyAttributes } from &#x27;./components/formly.attributes&#x27;;
-import { FormlyConfig, ConfigOption, FORMLY_CONFIG_TOKEN } from &#x27;./services/formly.config&#x27;;
+import { FormlyConfig, ConfigOption, FORMLY_CONFIG } from &#x27;./services/formly.config&#x27;;
 import { FormlyFormBuilder } from &#x27;./services/formly.form.builder&#x27;;
 import { FormlyGroup } from &#x27;./components/formly.group&#x27;;
 import { FormlyValidationMessage } from &#x27;./templates/formly.validation-message&#x27;;
+import { FieldExpressionExtension } from &#x27;./extensions/field-expression/field-expression&#x27;;
+
+export function defaultFormlyConfig(): ConfigOption {
+  return {
+    types: [{ name: &#x27;formly-group&#x27;, component: FormlyGroup }],
+    extensions: [{ name: &#x27;field-expression&#x27;, extension: new FieldExpressionExtension() }],
+  };
+}
 
 @NgModule({
   declarations: [FormlyForm, FormlyField, FormlyAttributes, FormlyGroup, FormlyValidationMessage],
   entryComponents: [FormlyGroup],
   exports: [FormlyForm, FormlyField, FormlyAttributes, FormlyGroup, FormlyValidationMessage],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule],
 })
 export class FormlyModule {
   static forRoot(config: ConfigOption &#x3D; {}): ModuleWithProviders {
     return {
       ngModule: FormlyModule,
       providers: [
-        { provide: FORMLY_CONFIG_TOKEN, useValue: { types: [{ name: &#x27;formly-group&#x27;, component: FormlyGroup }] }, multi: true },
-        { provide: FORMLY_CONFIG_TOKEN, useValue: config, multi: true },
+        { provide: FORMLY_CONFIG, multi: true, useFactory: defaultFormlyConfig },
+        { provide: FORMLY_CONFIG, useValue: config, multi: true },
         { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: config, multi: true },
         FormlyConfig,
         FormlyFormBuilder,
@@ -911,7 +921,7 @@ export class FormlyModule {
     return {
       ngModule: FormlyModule,
       providers: [
-        { provide: FORMLY_CONFIG_TOKEN, useValue: config, multi: true },
+        { provide: FORMLY_CONFIG, useValue: config, multi: true },
         { provide: ANALYZE_FOR_ENTRY_COMPONENTS, useValue: config, multi: true },
       ],
     };
@@ -920,7 +930,7 @@ export class FormlyModule {
   constructor(
     configService: FormlyConfig,
     componentFactoryResolver: ComponentFactoryResolver,
-    @Optional() @Inject(FORMLY_CONFIG_TOKEN) configs: ConfigOption[] &#x3D; [],
+    @Optional() @Inject(FORMLY_CONFIG) configs: ConfigOption[] &#x3D; [],
   ) {
     if (!configs) {
       return;
