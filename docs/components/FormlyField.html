@@ -697,7 +697,7 @@
 
             <tr>
                 <td class="col-md-3">template</td>
-                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;ng-template #fieldComponent&gt;&lt;/ng-template&gt;</code></pre></td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">&lt;ng-template #container&gt;&lt;/ng-template&gt;</code></pre></td>
             </tr>
 
 
@@ -719,7 +719,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#fieldComponent">fieldComponent</a>
+                                <a href="#containerRef">containerRef</a>
                             </li>
                         </ul>
                     </td>
@@ -944,18 +944,18 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="fieldComponent"></a>
+                        <a name="containerRef"></a>
                         <span class="name">
                             <b>
-                            fieldComponent
+                            containerRef
                             </b>
-                            <a href="#fieldComponent"><span class="fa fa-link"></span></a>
+                            <a href="#containerRef"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <code>fieldComponent:     <code><a href="https://angular.io/api/core/ViewContainerRef" target="_blank" >ViewContainerRef</a></code>
+                        <code>containerRef:     <code><a href="https://angular.io/api/core/ViewContainerRef" target="_blank" >ViewContainerRef</a></code>
 </code>
                     </td>
                 </tr>
@@ -1051,16 +1051,16 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
   Component, OnInit, OnChanges, EventEmitter, Input, Output, OnDestroy,
-  ViewContainerRef, ViewChild, ComponentRef, ComponentFactoryResolver, SimpleChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked,
+  ViewContainerRef, ViewChild, ComponentRef, SimpleChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked,
 } from &#x27;@angular/core&#x27;;
 import { FormGroup } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig } from &#x27;../services/formly.config&#x27;;
-import { FieldType } from &#x27;../templates/field.type&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyLifeCycleFn, FormlyLifeCycleOptions } from &#x27;./formly.field.config&#x27;;
+import { FieldWrapper } from &#x27;../templates/field.wrapper&#x27;;
 
 @Component({
   selector: &#x27;formly-field&#x27;,
-  template: &#x60;&lt;ng-template #fieldComponent&gt;&lt;/ng-template&gt;&#x60;,
+  template: &#x60;&lt;ng-template #container&gt;&lt;/ng-template&gt;&#x60;,
   host: {
     &#x27;[style.display]&#x27;: &#x27;field.hide ? &quot;none&quot;:&quot;&quot;&#x27;,
   },
@@ -1074,9 +1074,9 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
   @Input() field: FormlyFieldConfig;
   @Input() options: FormlyFormOptions &#x3D; {};
   @Output() modelChange: EventEmitter&lt;any&gt; &#x3D; new EventEmitter();
-  @ViewChild(&#x27;fieldComponent&#x27;, {read: ViewContainerRef}) fieldComponent: ViewContainerRef;
+  @ViewChild(&#x27;container&#x27;, {read: ViewContainerRef}) containerRef: ViewContainerRef;
 
-  private componentRefs: ComponentRef&lt;FieldType&gt;[] &#x3D; [];
+  private componentRefs: ComponentRef&lt;FieldWrapper&gt;[] &#x3D; [];
 
   constructor(private formlyConfig: FormlyConfig) {}
 
@@ -1106,7 +1106,7 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.field) {
-      this.renderField();
+      this.renderField(this.field, this.containerRef);
     }
 
     this.lifeCycleHooks(this.lifecycle.onChanges);
@@ -1125,34 +1125,18 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
     this.componentRefs &#x3D; [];
   }
 
-  private renderField() {
+  private renderField(field: FormlyFieldConfig, containerRef: ViewContainerRef) {
     this.componentRefs.forEach(componentRef &#x3D;&gt; componentRef.destroy());
     this.componentRefs &#x3D; [];
 
-    let fieldComponent &#x3D; this.fieldComponent;
-    (this.field.wrappers || []).forEach(wrapperName &#x3D;&gt; {
-      const wrapper &#x3D; this.formlyConfig.getWrapper(wrapperName);
-      const wrapperRef &#x3D; this.createComponent(wrapper.componentFactoryResolver, fieldComponent, wrapper.component);
-      fieldComponent &#x3D; wrapperRef.instance.fieldComponent;
+    const wrappers &#x3D; &lt;any&gt;(field.wrappers || []).map(wrapperName &#x3D;&gt; this.formlyConfig.getWrapper(wrapperName));
+    [...wrappers, this.formlyConfig.getType(field.type)].forEach(({ componentFactoryResolver, component }) &#x3D;&gt; {
+      const ref &#x3D; containerRef.createComponent&lt;FieldWrapper&gt;(componentFactoryResolver.resolveComponentFactory(component));
+
+      Object.assign(ref.instance, { form: this.form, options: this.options, field });
+      this.componentRefs.push(ref);
+      containerRef &#x3D; ref.instance.fieldComponent;
     });
-
-    const type &#x3D; this.formlyConfig.getType(this.field.type);
-    this.createComponent(type.componentFactoryResolver, fieldComponent, type.component);
-  }
-
-  private createComponent(componentFactoryResolver: ComponentFactoryResolver, fieldComponent: ViewContainerRef, component: any): ComponentRef&lt;any&gt; {
-    let componentFactory &#x3D; componentFactoryResolver.resolveComponentFactory(component);
-    let ref &#x3D; &lt;ComponentRef&lt;FieldType&gt;&gt;fieldComponent.createComponent(componentFactory);
-
-    Object.assign(ref.instance, {
-        form: this.form,
-        field: this.field,
-        options: this.options,
-    });
-
-    this.componentRefs.push(ref);
-
-    return ref;
   }
 
   private get lifecycle(): FormlyLifeCycleOptions {
@@ -1194,7 +1178,7 @@ export class FormlyField implements OnInit, OnChanges, DoCheck, AfterContentInit
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><ng-template #fieldComponent></ng-template></div>'
+        var COMPONENT_TEMPLATE = '<div><ng-template #container></ng-template></div>'
     var COMPONENTS = [{'name': 'FormlyField', 'selector': 'formly-field'},{'name': 'FormlyForm', 'selector': 'formly-form'},{'name': 'FormlyGroup', 'selector': 'formly-group'},{'name': 'FormlyTemplateType', 'selector': 'formly-template'},{'name': 'FormlyValidationMessage', 'selector': 'formly-validation-message'}];
     var DIRECTIVES = [{'name': 'FormlyAttributes', 'selector': '[formlyAttributes]'}];
     var ACTUAL_COMPONENT = {'name': 'FormlyField'};
