@@ -690,7 +690,7 @@
   [fields]&#x3D;&quot;field.fieldGroup&quot;
   [isRoot]&#x3D;&quot;false&quot;
   [model]&#x3D;&quot;field.model&quot;
-  [form]&#x3D;&quot;field.formControl || form&quot;
+  [form]&#x3D;&quot;field.formControl&quot;
   [options]&#x3D;&quot;options&quot;
   [ngClass]&#x3D;&quot;field.fieldGroupClassName&quot;&gt;
   &lt;ng-content&gt;&lt;/ng-content&gt;
@@ -868,7 +868,7 @@ import { FieldType } from &#x27;../templates/field.type&#x27;;
       [fields]&#x3D;&quot;field.fieldGroup&quot;
       [isRoot]&#x3D;&quot;false&quot;
       [model]&#x3D;&quot;field.model&quot;
-      [form]&#x3D;&quot;field.formControl || form&quot;
+      [form]&#x3D;&quot;field.formControl&quot;
       [options]&#x3D;&quot;options&quot;
       [ngClass]&#x3D;&quot;field.fieldGroupClassName&quot;&gt;
       &lt;ng-content&gt;&lt;/ng-content&gt;
@@ -905,7 +905,7 @@ export class FormlyGroup extends FieldType {}
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><formly-form  [fields]="field.fieldGroup"  [isRoot]="false"  [model]="field.model"  [form]="field.formControl || form"  [options]="options"  [ngClass]="field.fieldGroupClassName">  <ng-content></ng-content></formly-form></div>'
+        var COMPONENT_TEMPLATE = '<div><formly-form  [fields]="field.fieldGroup"  [isRoot]="false"  [model]="field.model"  [form]="field.formControl"  [options]="options"  [ngClass]="field.fieldGroupClassName">  <ng-content></ng-content></formly-form></div>'
     var COMPONENTS = [{'name': 'FormlyField', 'selector': 'formly-field'},{'name': 'FormlyForm', 'selector': 'formly-form'},{'name': 'FormlyGroup', 'selector': 'formly-group'},{'name': 'FormlyTemplateType', 'selector': 'formly-template'},{'name': 'FormlyValidationMessage', 'selector': 'formly-validation-message'}];
     var DIRECTIVES = [{'name': 'FormlyAttributes', 'selector': '[formlyAttributes]'}];
     var ACTUAL_COMPONENT = {'name': 'FormlyGroup'};
