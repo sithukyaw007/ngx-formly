@@ -861,7 +861,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 import { FormGroup, FormArray, FormControl, AbstractControl, Validators, AbstractControlOptions } from &#x27;@angular/forms&#x27;;
 import { FormlyConfig, FieldValidatorFn, TemplateManipulators } from &#x27;./formly.config&#x27;;
-import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache, FormlyFormOptionsCache } from &#x27;../components/formly.field.config&#x27;;
+import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache } from &#x27;../components/formly.field.config&#x27;;
 import { FORMLY_VALIDATORS, getFieldId, isObject, isNullOrUndefined, getKeyPath, assignModelValue, isUndefined, clone, removeFieldControl, getFieldValue } from &#x27;../utils&#x27;;
 
 @Injectable({ providedIn: &#x27;root&#x27; })
@@ -882,67 +882,68 @@ export class FormlyFormBuilder {
     });
 
     this._buildForm({ fieldGroup, model, formControl, options });
-    if ((&lt;FormlyFormOptionsCache&gt;options)._checkField) {
-      (&lt;FormlyFormOptionsCache&gt; options)._checkField({ fieldGroup, model, formControl, options });
-    }
   }
 
-  private _buildForm(root: FormlyFieldConfigCache) {
-    this.formId++;
-    root.fieldGroup.forEach((field, index) &#x3D;&gt; {
-      this.getExtensions().forEach(extension &#x3D;&gt; extension.prePopulate &amp;&amp; extension.prePopulate(field));
-      this.initFieldOptions(root, field, index);
-      this.getExtensions().forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
-      this.initFieldValidation(field);
-      this.initFieldAsyncValidation(field);
-      if (field.key &amp;&amp; field.type) {
-        const paths &#x3D; getKeyPath({ key: field.key });
-        let rootForm &#x3D; root.formControl as FormGroup, rootModel &#x3D; field.fieldGroup ? { [paths[0]]: field.model } : field.model;
-        paths.forEach((path, index) &#x3D;&gt; {
-          // FormGroup/FormArray only allow string value for path
-          const formPath &#x3D; path.toString();
-          // is last item
-          if (index &#x3D;&#x3D;&#x3D; paths.length - 1) {
-            this.addFormControl(rootForm, field, rootModel, formPath);
-
-          } else {
-            let nestedForm &#x3D; rootForm.get(formPath) as FormGroup;
-            if (!nestedForm) {
-              nestedForm &#x3D; new FormGroup({});
-              this.addControl(rootForm, formPath, nestedForm);
-            }
-            if (!rootModel[path]) {
-              rootModel[path] &#x3D; typeof path &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? {} : [];
-            }
-
-            rootForm &#x3D; nestedForm;
-            rootModel &#x3D; rootModel[path];
+  private _buildForm(field: FormlyFieldConfigCache) {
+    this.getExtensions().forEach(extension &#x3D;&gt; extension.prePopulate &amp;&amp; extension.prePopulate(field));
+    this.initFieldOptions(field);
+    this.getExtensions().forEach(extension &#x3D;&gt; extension.onPopulate &amp;&amp; extension.onPopulate(field));
+    this.initFieldValidation(field);
+    this.initFieldAsyncValidation(field);
+    if (field.key &amp;&amp; field.type) {
+      const paths &#x3D; getKeyPath({ key: field.key });
+      let rootForm &#x3D; field.parent.formControl as FormGroup, rootModel &#x3D; field.fieldGroup ? { [paths[0]]: field.model } : field.model;
+      paths.forEach((path, index) &#x3D;&gt; {
+        // FormGroup/FormArray only allow string value for path
+        const formPath &#x3D; path.toString();
+        // is last item
+        if (index &#x3D;&#x3D;&#x3D; paths.length - 1) {
+          this.addFormControl(rootForm, field, rootModel, formPath);
+        } else {
+          if (!rootModel[path]) {
+            rootModel[path] &#x3D; typeof path &#x3D;&#x3D;&#x3D; &#x27;string&#x27; ? {} : [];
           }
-        });
-      } else if (!field.key &amp;&amp; field.fieldGroup) {
-        field.formControl &#x3D; root.formControl;
+          this.addFormControl(rootForm, { key: formPath, fieldGroup: [], modelOptions: {}, templateOptions: {} }, rootModel, formPath);
+
+          rootForm &#x3D; &lt;FormGroup&gt; rootForm.get(formPath);
+          rootModel &#x3D; rootModel[path];
+        }
+      });
+    }
+
+    if (field.fieldGroup) {
+      if (!field.formControl) {
+        field.formControl &#x3D; field.parent.formControl;
       }
 
-      if (field.fieldGroup) {
-        this._buildForm(field);
-      }
-      this.getExtensions().forEach(extension &#x3D;&gt; extension.postPopulate &amp;&amp; extension.postPopulate(field));
-    });
+      field.fieldGroup.forEach((f, index) &#x3D;&gt; {
+        Object.defineProperty(f, &#x27;parent&#x27;, { get: () &#x3D;&gt; field, configurable: true });
+        Object.defineProperty(f, &#x27;index&#x27;, { get: () &#x3D;&gt; index, configurable: true });
+        this.formId++;
+        this._buildForm(f);
+      });
+    }
+
+    this.getExtensions().forEach(extension &#x3D;&gt; extension.postPopulate &amp;&amp; extension.postPopulate(field));
   }
 
   private getExtensions() {
     return Object.keys(this.formlyConfig.extensions).map(name &#x3D;&gt; this.formlyConfig.extensions[name]);
   }
 
-  private initFieldOptions(root: FormlyFieldConfigCache, field: FormlyFieldConfig, index: number) {
+  private initFieldOptions(field: FormlyFieldConfigCache) {
+    const root &#x3D; &lt;FormlyFieldConfigCache&gt; field.parent;
+    if (!root) {
+      return;
+    }
+
     Object.defineProperty(field, &#x27;options&#x27;, { get: () &#x3D;&gt; root.options, configurable: true });
-    Object.defineProperty(field, &#x27;parent&#x27;, { get: () &#x3D;&gt; root, configurable: true });
     Object.defineProperty(field, &#x27;model&#x27;, {
       get: () &#x3D;&gt; field.key &amp;&amp; field.fieldGroup ? getFieldValue(field) : root.model,
       configurable: true,
     });
 
-    field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, index);
+    field.id &#x3D; getFieldId(&#x60;formly_${this.formId}&#x60;, field, field[&#x27;index&#x27;]);
     field.templateOptions &#x3D; field.templateOptions || {};
     field.modelOptions &#x3D; field.modelOptions || {};
     field.lifecycle &#x3D; field.lifecycle || {};
@@ -997,7 +998,7 @@ export class FormlyFormBuilder {
     }
   }
 
-  private addFormControl(form: FormGroup | FormArray, field: FormlyFieldConfigCache, model: any, path: string) {
+  private addFormControl(form: FormGroup | FormArray, field: FormlyFieldConfigCache, model: any, path: string|number) {
     const abstractControlOptions &#x3D; {
       validators: field._validators,
       asyncValidators: field._asyncValidators,
@@ -1005,8 +1006,8 @@ export class FormlyFormBuilder {
     } as AbstractControlOptions;
     let control: AbstractControl;
 
-    if (field.formControl instanceof AbstractControl || form.get(path)) {
-      control &#x3D; field.formControl || form.get(path);
+    if (field.formControl instanceof AbstractControl || form.get(&lt;string&gt; path)) {
+      control &#x3D; field.formControl || form.get(&lt;string&gt; path);
       if (
         !(isNullOrUndefined(control.value) &amp;&amp; isNullOrUndefined(model[path]))
         &amp;&amp; control.value !&#x3D;&#x3D; model[path]
@@ -1049,21 +1050,17 @@ export class FormlyFormBuilder {
       });
     }
 
-    this.addControl(form, path, control, field);
-  }
-
-  private addControl(form: FormGroup | FormArray, key: string | number, formControl: AbstractControl, field?: FormlyFieldConfig) {
     if (field) {
-      field.formControl &#x3D; formControl;
+      field.formControl &#x3D; control;
     }
 
     if (form instanceof FormArray) {
-      if (form.at(&lt;number&gt; key) !&#x3D;&#x3D; formControl) {
-        form.setControl(&lt;number&gt;key, formControl);
+      if (form.at(&lt;number&gt; path) !&#x3D;&#x3D; control) {
+        form.setControl(&lt;number&gt; path, control);
       }
     } else {
-      if (form.get(&lt;string&gt; key) !&#x3D;&#x3D; formControl) {
-        form.setControl(&lt;string&gt;key, formControl);
+      if (form.get(&lt;string&gt; path) !&#x3D;&#x3D; control) {
+        form.setControl(&lt;string&gt; path, control);
       }
     }
   }
@@ -1147,7 +1144,7 @@ export class FormlyFormBuilder {
 
   private initPredefinedFieldValidation(field: FormlyFieldConfigCache) {
     FORMLY_VALIDATORS
-      .filter(opt &#x3D;&gt; field.templateOptions.hasOwnProperty(opt) || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]))
+      .filter(opt &#x3D;&gt; (field.templateOptions &amp;&amp; field.templateOptions.hasOwnProperty(opt)) || (field.expressionProperties &amp;&amp; field.expressionProperties[&#x60;templateOptions.${opt}&#x60;]))
       .forEach((opt) &#x3D;&gt; {
         field._validators.push((control: AbstractControl) &#x3D;&gt; {
           const value &#x3D; field.templateOptions[opt];

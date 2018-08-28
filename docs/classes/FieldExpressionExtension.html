@@ -681,6 +681,12 @@
                             <li>
                                 <a href="#onPopulate">onPopulate</a>
                             </li>
+                            <li>
+                                <a href="#postPopulate">postPopulate</a>
+                            </li>
+                            <li>
+                                <a href="#prePopulate">prePopulate</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -716,6 +722,144 @@
                 <tr>
                     <td class="col-md-4">
 <code>onPopulate(field: <a href="../interfaces/FormlyFieldConfigCache.html">FormlyFieldConfigCache</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:21</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>field</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/FormlyFieldConfigCache.html" target="_self" >FormlyFieldConfigCache</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="postPopulate"></a>
+                        <span class="name">
+                            <b>
+                            postPopulate
+                            </b>
+                            <a href="#postPopulate"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>postPopulate(field: <a href="../interfaces/FormlyFieldConfigCache.html">FormlyFieldConfigCache</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:81</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>field</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/FormlyFieldConfigCache.html" target="_self" >FormlyFieldConfigCache</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="prePopulate"></a>
+                        <span class="name">
+                            <b>
+                            prePopulate
+                            </b>
+                            <a href="#prePopulate"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>prePopulate(field: <a href="../interfaces/FormlyFieldConfigCache.html">FormlyFieldConfigCache</a>)</code>
                     </td>
                 </tr>
 
@@ -792,8 +936,16 @@ import { tap } from &#x27;rxjs/operators&#x27;;
 import { FormlyExtension } from &#x27;../../services/formly.config&#x27;;
 
 export class FieldExpressionExtension implements FormlyExtension {
+  prePopulate(field: FormlyFieldConfigCache) {
+    if (field.parent || field.options._checkField) {
+      return;
+    }
+
+    field.options._checkField &#x3D; (f) &#x3D;&gt; this._checkField(f);
+  }
+
   onPopulate(field: FormlyFieldConfigCache) {
-    if (field._expressionProperties) {
+    if (!field.parent || field._expressionProperties) {
       return;
     }
 
@@ -850,10 +1002,13 @@ export class FieldExpressionExtension implements FormlyExtension {
         field.parent &amp;&amp; field.parent.hideExpression ? () &#x3D;&gt; field.parent.hide : undefined,
       );
     }
+  }
 
-    if (!field.options._checkField) {
-      field.options._checkField &#x3D; (f) &#x3D;&gt; this._checkField(f);
+  postPopulate(field: FormlyFieldConfigCache) {
+    if (field.parent) {
+      return;
     }
+    field.options._checkField(field);
   }
 
   private _evalExpression(expression, parentExpression?) {
