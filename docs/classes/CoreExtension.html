@@ -791,7 +791,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:27</a></div>
                             </td>
                         </tr>
 
@@ -935,6 +935,7 @@ export class CoreExtension implements FormlyExtension {
     const fieldTransforms &#x3D; (field.options &amp;&amp; field.options.fieldTransform) || this.formlyConfig.extras.fieldTransform;
     (Array.isArray(fieldTransforms) ? fieldTransforms : [fieldTransforms]).forEach(fieldTransform &#x3D;&gt; {
       if (fieldTransform) {
+        console.warn(&#x60;NgxFormly: fieldTransform is deprecated since v5.0, use custom extension instead.&#x60;);
         const fieldGroup &#x3D; fieldTransform(field.fieldGroup, field.model, &lt;FormGroup&gt;field.formControl, field.options);
         if (!fieldGroup) {
           throw new Error(&#x27;fieldTransform must return an array of fields&#x27;);
