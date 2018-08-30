@@ -682,6 +682,11 @@
                         <code><a href="../interfaces/FormlyExtension.html" target="_self" >FormlyExtension</a></code>
             </p>
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -698,6 +703,9 @@
                         <ul class="index-list">
                             <li>
                                 <a href="#onPopulate">onPopulate</a>
+                            </li>
+                            <li>
+                                <a href="#postPopulate">postPopulate</a>
                             </li>
                             <li>
                                 <a href="#prePopulate">prePopulate</a>
@@ -725,7 +733,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:7</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -791,7 +799,76 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:27</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:30</a></div>
+                            </td>
+                        </tr>
+
+
+                <tr>
+                    <td class="col-md-4">
+
+                            <div class="io-description">
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>field</td>
+                                                        <td>
+                                                                    <code><a href="../interfaces/FormlyFieldConfigCache.html" target="_self" >FormlyFieldConfigCache</a></code>
+                                                        </td>
+                                                    
+                                                    <td>
+                                                            no
+                                                    </td>
+                                                    
+
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                            <div>
+                            </div>
+                            <div class="io-description">
+                                <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                            </div>
+                                <div class="io-description">
+                                    
+                                </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="postPopulate"></a>
+                        <span class="name">
+                            <b>
+                            postPopulate
+                            </b>
+                            <a href="#postPopulate"><span class="fa fa-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+<code>postPopulate(field: <a href="../interfaces/FormlyFieldConfigCache.html">FormlyFieldConfigCache</a>)</code>
+                    </td>
+                </tr>
+
+
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:42</a></div>
                             </td>
                         </tr>
 
@@ -860,7 +937,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/core/src/lib/extensions/core/core.ts:11</a></div>
                             </td>
                         </tr>
 
@@ -923,11 +1000,14 @@ import { FormlyFieldConfigCache, FormlyFieldConfig } from &#x27;../../components
 import { FormGroup, FormArray } from &#x27;@angular/forms&#x27;;
 import { getFieldId, assignModelValue, isUndefined, clone, removeFieldControl, getFieldValue } from &#x27;../../utils&#x27;;
 
+/** @experimental */
 export class CoreExtension implements FormlyExtension {
   private formId &#x3D; 0;
   constructor(private formlyConfig: FormlyConfig) { }
 
   prePopulate(field: FormlyFieldConfigCache) {
+    this.formlyConfig.createComponentInstance(field);
+    this.getFieldComponentInstance(field).prePopulate();
     if (field.parent) {
       return;
     }
@@ -946,6 +1026,7 @@ export class CoreExtension implements FormlyExtension {
 
   onPopulate(field: FormlyFieldConfigCache) {
     this.initFieldOptions(field);
+    this.getFieldComponentInstance(field).onPopulate();
     if (field.fieldGroup) {
       field.fieldGroup.forEach((f, index) &#x3D;&gt; {
         Object.defineProperty(f, &#x27;parent&#x27;, { get: () &#x3D;&gt; field, configurable: true });
@@ -955,6 +1036,9 @@ export class CoreExtension implements FormlyExtension {
     }
   }
 
+  postPopulate(field: FormlyFieldConfigCache) {
+    this.getFieldComponentInstance(field).postPopulate();
+  }
 
   private initFieldOptions(field: FormlyFieldConfigCache) {
     const root &#x3D; &lt;FormlyFieldConfigCache&gt; field.parent;
@@ -1038,6 +1122,19 @@ export class CoreExtension implements FormlyExtension {
       ...this.formlyConfig.templateManipulators.postWrapper.map(m &#x3D;&gt; m(field)),
       ...fieldTemplateManipulators.postWrapper.map(m &#x3D;&gt; m(field)),
     ].filter((el, i, a) &#x3D;&gt; el &amp;&amp; i &#x3D;&#x3D;&#x3D; a.indexOf(el));
+  }
+
+  private getFieldComponentInstance(field: FormlyFieldConfigCache) {
+    let instance: FormlyExtension &#x3D; {};
+    if (field._componentFactory &amp;&amp; field._componentFactory.componentRef) {
+      instance &#x3D; field._componentFactory.componentRef.instance;
+    }
+
+    return {
+      prePopulate: () &#x3D;&gt; instance.prePopulate &amp;&amp; instance.prePopulate(field),
+      onPopulate: () &#x3D;&gt; instance.onPopulate &amp;&amp; instance.onPopulate(field),
+      postPopulate: () &#x3D;&gt; instance.postPopulate &amp;&amp; instance.postPopulate(field),
+    };
   }
 }
 </code></pre>

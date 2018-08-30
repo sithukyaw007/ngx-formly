@@ -812,7 +812,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="205" class="link-to-prism">src/core/src/lib/components/formly.field.config.ts:205</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="212" class="link-to-prism">src/core/src/lib/components/formly.field.config.ts:212</a></div>
                             </td>
                         </tr>
             </tbody>
@@ -1714,6 +1714,7 @@
 import { Subject, Observable } from &#x27;rxjs&#x27;;
 import { FieldType } from &#x27;../templates/field.type&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
+import { ComponentFactoryResolver, ComponentRef } from &#x27;@angular/core&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -1884,6 +1885,12 @@ export interface FormlyFieldConfigCache extends FormlyFieldConfig {
   _expressionProperties?: { [property: string]: ExpressionPropertyCache };
   _validators?: ValidatorFn[];
   _asyncValidators?: AsyncValidatorFn[];
+  _componentFactory?: {
+    type: string;
+    component: any;
+    componentFactoryResolver: ComponentFactoryResolver,
+    componentRef?: ComponentRef&lt;any&gt;;
+  };
 }
 
 export type FormlyAttributeEvent &#x3D; (field: FormlyFieldConfig, event?: any) &#x3D;&gt; void;

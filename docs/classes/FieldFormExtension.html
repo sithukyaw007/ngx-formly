@@ -682,6 +682,11 @@
                         <code><a href="../interfaces/FormlyExtension.html" target="_self" >FormlyExtension</a></code>
             </p>
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -740,7 +745,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/core/src/lib/extensions/field-form/field-form.ts:7</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="8" class="link-to-prism">src/core/src/lib/extensions/field-form/field-form.ts:8</a></div>
                             </td>
                         </tr>
 
@@ -803,6 +808,7 @@ import { FormlyFieldConfigCache } from &#x27;../../components/formly.field.confi
 import { AbstractControl, FormGroup, FormArray, FormControl, AbstractControlOptions } from &#x27;@angular/forms&#x27;;
 import { getKeyPath, isNullOrUndefined } from &#x27;../../utils&#x27;;
 
+/** @experimental */
 export class FieldFormExtension implements FormlyExtension {
   onPopulate(field: FormlyFieldConfigCache) {
     if (field.key &amp;&amp; field.type) {
@@ -858,8 +864,8 @@ export class FieldFormExtension implements FormlyExtension {
         }
         control.updateValueAndValidity();
       }
-    } else if ((&lt;any&gt; field).component &amp;&amp; (&lt;any&gt; field).component.createControl) {
-      control &#x3D; (&lt;any&gt; field).component.createControl(model[path], field);
+    } else if (field._componentFactory &amp;&amp; field._componentFactory.component &amp;&amp; field._componentFactory.component.createControl) {
+      control &#x3D; field._componentFactory.component.createControl(model[path], field);
     } else if (field.fieldGroup &amp;&amp; !field.fieldArray) {
       control &#x3D; new FormGroup({}, abstractControlOptions);
     } else if (field.fieldArray) {

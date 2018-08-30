@@ -810,6 +810,7 @@
 import { Subject, Observable } from &#x27;rxjs&#x27;;
 import { FieldType } from &#x27;../templates/field.type&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
+import { ComponentFactoryResolver, ComponentRef } from &#x27;@angular/core&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -980,6 +981,12 @@ export interface FormlyFieldConfigCache extends FormlyFieldConfig {
   _expressionProperties?: { [property: string]: ExpressionPropertyCache };
   _validators?: ValidatorFn[];
   _asyncValidators?: AsyncValidatorFn[];
+  _componentFactory?: {
+    type: string;
+    component: any;
+    componentFactoryResolver: ComponentFactoryResolver,
+    componentRef?: ComponentRef&lt;any&gt;;
+  };
 }
 
 export type FormlyAttributeEvent &#x3D; (field: FormlyFieldConfig, event?: any) &#x3D;&gt; void;

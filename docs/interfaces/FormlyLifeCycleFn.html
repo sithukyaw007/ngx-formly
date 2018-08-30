@@ -689,7 +689,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-5d66892c75de04ef23589faa3e75d99c">Unamed property</a>
+                                        <a href="#call-declaration-4d6c229e05c1458d93b52458cc9f76ec">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -708,7 +708,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-5d66892c75de04ef23589faa3e75d99c"></a>
+                                            <a name="call-declaration-4d6c229e05c1458d93b52458cc9f76ec"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [form: FormGroup, field: FormlyFieldConfig, model: any, options: FormlyFormOptions]
@@ -738,6 +738,7 @@
 import { Subject, Observable } from &#x27;rxjs&#x27;;
 import { FieldType } from &#x27;../templates/field.type&#x27;;
 import { TemplateManipulators } from &#x27;../services/formly.config&#x27;;
+import { ComponentFactoryResolver, ComponentRef } from &#x27;@angular/core&#x27;;
 
 export interface FormlyFieldConfig {
   /**
@@ -908,6 +909,12 @@ export interface FormlyFieldConfigCache extends FormlyFieldConfig {
   _expressionProperties?: { [property: string]: ExpressionPropertyCache };
   _validators?: ValidatorFn[];
   _asyncValidators?: AsyncValidatorFn[];
+  _componentFactory?: {
+    type: string;
+    component: any;
+    componentFactoryResolver: ComponentFactoryResolver,
+    componentRef?: ComponentRef&lt;any&gt;;
+  };
 }
 
 export type FormlyAttributeEvent &#x3D; (field: FormlyFieldConfig, event?: any) &#x3D;&gt; void;

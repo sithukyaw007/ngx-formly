@@ -682,6 +682,11 @@
                         <code><a href="../interfaces/FormlyExtension.html" target="_self" >FormlyExtension</a></code>
             </p>
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -722,7 +727,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="6" class="link-to-prism">src/core/src/lib/extensions/field-validation/field-validation.ts:6</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/core/src/lib/extensions/field-validation/field-validation.ts:7</a></div>
                             </td>
                         </tr>
 
@@ -788,7 +793,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/core/src/lib/extensions/field-validation/field-validation.ts:9</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/core/src/lib/extensions/field-validation/field-validation.ts:10</a></div>
                             </td>
                         </tr>
 
@@ -851,6 +856,7 @@ import { FormlyFieldConfigCache } from &#x27;../../components/formly.field.confi
 import { AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
 import { isObject, FORMLY_VALIDATORS } from &#x27;../../utils&#x27;;
 
+/** @experimental */
 export class FieldValidationExtension implements FormlyExtension {
   constructor(private formlyConfig: FormlyConfig) {}
 
@@ -858,7 +864,6 @@ export class FieldValidationExtension implements FormlyExtension {
     this.initFieldValidation(field);
     this.initFieldAsyncValidation(field);
   }
-
 
   private initFieldValidation(field: FormlyFieldConfigCache) {
     if (field._validators) {

@@ -682,6 +682,11 @@
                         <code><a href="../interfaces/FormlyExtension.html" target="_self" >FormlyExtension</a></code>
             </p>
 
+            <p class="comment">
+                <h3>Example</h3>
+            </p>
+            <div class="io-description">
+            </div>
 
             <section>
     <h3 id="index">Index</h3>
@@ -746,7 +751,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:22</a></div>
                             </td>
                         </tr>
 
@@ -815,7 +820,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:81</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:82</a></div>
                             </td>
                         </tr>
 
@@ -884,7 +889,7 @@
 
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/core/src/lib/extensions/field-expression/field-expression.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -953,6 +958,7 @@ import { Observable } from &#x27;rxjs&#x27;;
 import { tap } from &#x27;rxjs/operators&#x27;;
 import { FormlyExtension } from &#x27;../../services/formly.config&#x27;;
 
+/** @experimental */
 export class FieldExpressionExtension implements FormlyExtension {
   prePopulate(field: FormlyFieldConfigCache) {
     if (field.parent || field.options._checkField) {
