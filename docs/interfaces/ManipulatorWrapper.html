@@ -689,7 +689,7 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#call-declaration-5f3d5e31655b3f926774434e16ff5389">Unamed property</a>
+                                        <a href="#call-declaration-6eb185919a67328014188ea38ab675b8">Unamed property</a>
                                 </li>
                             </ul>
                         </td>
@@ -708,7 +708,7 @@
                                     <tr>
                                         <td class="col-md-4">
                                             <i>Signature :</i>
-                                            <a name="call-declaration-5f3d5e31655b3f926774434e16ff5389"></a>
+                                            <a name="call-declaration-6eb185919a67328014188ea38ab675b8"></a>
                                             <code>
                                                 <!--ts.SyntaxKind.CallSignature-->
                                                     [f: FormlyFieldConfig]
@@ -737,7 +737,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, InjectionToken, ComponentFactoryResolver } from &#x27;@angular/core&#x27;;
 import { ValidationErrors, FormGroup, FormArray, AbstractControl } from &#x27;@angular/forms&#x27;;
 import { FieldType } from &#x27;./../templates/field.type&#x27;;
-import { reverseDeepMerge } from &#x27;./../utils&#x27;;
+import { reverseDeepMerge, defineHiddenProp } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache } from &#x27;../components/formly.field.config&#x27;;
 
 export const FORMLY_CONFIG &#x3D; new InjectionToken&lt;FormlyConfig&gt;(&#x27;FORMLY_CONFIG&#x27;);
@@ -860,14 +860,15 @@ export class FormlyConfig {
       return;
     }
     const type &#x3D; this.getType(field.type);
-    field._componentFactory &#x3D; {
+
+    defineHiddenProp(field, &#x27;_componentFactory&#x27;, {
       type: field.type,
       component: type.component,
       componentFactoryResolver: type.componentFactoryResolver,
       componentRef: !type.componentFactoryResolver ? undefined : type.componentFactoryResolver
         .resolveComponentFactory(type.component)
         .create((&lt;any&gt; type.componentFactoryResolver)._ngModule.injector),
-    };
+    });
   }
 
   setWrapper(options: WrapperOption) {

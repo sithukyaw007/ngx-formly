@@ -854,7 +854,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { FormlyExtension, FieldValidatorFn, FormlyConfig } from &#x27;../../services/formly.config&#x27;;
 import { FormlyFieldConfigCache } from &#x27;../../components/formly.field.config&#x27;;
 import { AbstractControl, Validators } from &#x27;@angular/forms&#x27;;
-import { isObject, FORMLY_VALIDATORS } from &#x27;../../utils&#x27;;
+import { isObject, FORMLY_VALIDATORS, defineHiddenProp } from &#x27;../../utils&#x27;;
 
 /** @experimental */
 export class FieldValidationExtension implements FormlyExtension {
@@ -870,7 +870,7 @@ export class FieldValidationExtension implements FormlyExtension {
       return;
     }
 
-    field._validators &#x3D; [];
+    defineHiddenProp(field, &#x27;_validators&#x27;, []);
     this.initPredefinedFieldValidation(field);
     if (field.validators) {
       for (const validatorName in field.validators) {
@@ -917,7 +917,7 @@ export class FieldValidationExtension implements FormlyExtension {
       return;
     }
 
-    field._asyncValidators &#x3D; [];
+    defineHiddenProp(field, &#x27;_asyncValidators&#x27;, []);
     if (field.asyncValidators) {
       for (const validatorName in field.asyncValidators) {
         if (validatorName !&#x3D;&#x3D; &#x27;validation&#x27;) {

@@ -951,7 +951,7 @@
 import { FormlyFieldConfig, FormlyValueChangeEvent, FormlyFieldConfigCache } from &#x27;../../components/formly.field.config&#x27;;
 import {
   isObject, isNullOrUndefined, isFunction,
-  FORMLY_VALIDATORS, getFieldValue, getKeyPath, removeFieldControl,
+  FORMLY_VALIDATORS, getFieldValue, getKeyPath, removeFieldControl, defineHiddenProp,
 } from &#x27;../../utils&#x27;;
 import { evalExpression, evalStringExpression, evalExpressionValueSetter } from &#x27;./utils&#x27;;
 import { Observable } from &#x27;rxjs&#x27;;
@@ -974,7 +974,7 @@ export class FieldExpressionExtension implements FormlyExtension {
     }
 
     // cache built expression
-    field._expressionProperties &#x3D; field._expressionProperties || {};
+    defineHiddenProp(field, &#x27;_expressionProperties&#x27;, {});
 
     if (field.expressionProperties) {
       for (const key in field.expressionProperties) {

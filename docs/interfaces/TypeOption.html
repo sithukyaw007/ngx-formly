@@ -929,7 +929,7 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, InjectionToken, ComponentFactoryResolver } from &#x27;@angular/core&#x27;;
 import { ValidationErrors, FormGroup, FormArray, AbstractControl } from &#x27;@angular/forms&#x27;;
 import { FieldType } from &#x27;./../templates/field.type&#x27;;
-import { reverseDeepMerge } from &#x27;./../utils&#x27;;
+import { reverseDeepMerge, defineHiddenProp } from &#x27;./../utils&#x27;;
 import { FormlyFieldConfig, FormlyFormOptions, FormlyFieldConfigCache } from &#x27;../components/formly.field.config&#x27;;
 
 export const FORMLY_CONFIG &#x3D; new InjectionToken&lt;FormlyConfig&gt;(&#x27;FORMLY_CONFIG&#x27;);
@@ -1052,14 +1052,15 @@ export class FormlyConfig {
       return;
     }
     const type &#x3D; this.getType(field.type);
-    field._componentFactory &#x3D; {
+
+    defineHiddenProp(field, &#x27;_componentFactory&#x27;, {
       type: field.type,
       component: type.component,
       componentFactoryResolver: type.componentFactoryResolver,
       componentRef: !type.componentFactoryResolver ? undefined : type.componentFactoryResolver
         .resolveComponentFactory(type.component)
         .create((&lt;any&gt; type.componentFactoryResolver)._ngModule.injector),
-    };
+    });
   }
 
   setWrapper(options: WrapperOption) {
