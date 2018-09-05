@@ -702,7 +702,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#prePopulate">prePopulate</a>
+                                <a href="#onPopulate">onPopulate</a>
                             </li>
                         </ul>
                     </td>
@@ -775,18 +775,18 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="prePopulate"></a>
+                        <a name="onPopulate"></a>
                         <span class="name">
                             <b>
-                            prePopulate
+                            onPopulate
                             </b>
-                            <a href="#prePopulate"><span class="fa fa-link"></span></a>
+                            <a href="#onPopulate"><span class="fa fa-link"></span></a>
                         </span>
                     </td>
                 </tr>
                 <tr>
                     <td class="col-md-4">
-<code>prePopulate(field: <a href="../interfaces/FormlyFieldConfigCache.html">FormlyFieldConfigCache</a>)</code>
+<code>onPopulate(field: <a href="../interfaces/FormlyFieldConfigCache.html">FormlyFieldConfigCache</a>)</code>
                     </td>
                 </tr>
 
@@ -860,7 +860,7 @@ import { isObject, FORMLY_VALIDATORS, defineHiddenProp } from &#x27;../../utils&
 export class FieldValidationExtension implements FormlyExtension {
   constructor(private formlyConfig: FormlyConfig) {}
 
-  prePopulate(field: FormlyFieldConfigCache) {
+  onPopulate(field: FormlyFieldConfigCache) {
     this.initFieldValidation(field);
     this.initFieldAsyncValidation(field);
   }
